@@ -1,6 +1,6 @@
-import 'package:chat_app/mvvm/model/chat_message.dart';
-import 'package:chat_app/mvvm/model/chat_user.dart';
-import 'package:chat_app/mvvm/model/send_menu_item.dart';
+import 'package:chat_app/data/model/response/chat_message.dart';
+import 'package:chat_app/data/model/response/chat_user.dart';
+import 'package:chat_app/data/model/response/send_menu_item.dart';
 import 'package:flutter/material.dart';
 
 class FakeData{
