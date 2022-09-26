@@ -77,7 +77,7 @@ class _LoginState extends ConsumerState<LoginScreen> {
                       width: 144,
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 64,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),

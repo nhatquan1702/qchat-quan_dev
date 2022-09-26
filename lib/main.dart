@@ -1,5 +1,6 @@
 import 'package:chat_app/constant/theme.dart';
 import 'package:chat_app/route/route.dart';
+import 'package:chat_app/test.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme(context),
       darkTheme: AppTheme.darkTheme(context),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const WelcomeScreen(),
+      home: HomePage(),
     );
   }
 }
