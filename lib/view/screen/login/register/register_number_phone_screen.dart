@@ -191,7 +191,7 @@ class _RegisterWithPhoneNumberState
                       context,
                       ConstantStringsRoute.routeToVerificationScreen,
                       arguments: {
-                        'phoneNumber': phoneNumber,
+                        'phoneNumber': tmp,
                         'verificationId': 'verificationId',
                         'resendToken': 'resendToken',
                       },
