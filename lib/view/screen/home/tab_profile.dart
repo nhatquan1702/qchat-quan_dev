@@ -2,7 +2,8 @@ import 'dart:io';
 import 'dart:math';
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/button_in_appbar.dart';
-import 'package:chat_app/view/screen/home/view_model/picker_image_notifier.dart';
+import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
+import 'package:chat_app/view/component/provider/scroll_notifier.dart';
 import 'package:chat_app/view/screen/home/widget/custom_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,25 +19,12 @@ class TabProfile extends ConsumerStatefulWidget {
 
 class _TabCallsState extends ConsumerState<TabProfile> {
   late ScrollController _scrollController;
-  double _scrollPosition = 0.0;
-  int _position = 0;
-  double _offset = 0.0;
-
-  _scrollListener() {
-    setState(() {
-      _scrollPosition = _scrollController.position.pixels;
-      _position = _scrollPosition.toInt();
-    });
-  }
 
   @override
   void initState() {
     _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
     _scrollController.addListener(() {
-      setState(() {
-        _offset = _scrollController.offset;
-      });
+      ref.read(scrollableProvider).scrollable(_scrollController);
     });
     super.initState();
   }
@@ -49,13 +37,14 @@ class _TabCallsState extends ConsumerState<TabProfile> {
 
   @override
   Widget build(BuildContext context) {
+    int position = ref.watch(scrollableProvider).position;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).cardColor,
-      appBar: _position < 50
+      appBar: position < 50
           ? null
           : AppBar(
               actions: _buildActionsAppBar(),
@@ -69,7 +58,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
               ),
               backgroundColor: Theme.of(context)
                   .cardColor
-                  .withOpacity(max(0, min(1, _position / 280))),
+                  .withOpacity(max(0, min(1, position / 280))),
               elevation: 0.2,
               shadowColor: Theme.of(context).canvasColor,
               centerTitle: false,
@@ -307,6 +296,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
   }
 
   Widget _buildBody(BuildContext context) {
+    double offset = ref.watch(scrollableProvider).offset;
     return Column(
       children: [
         Stack(
@@ -315,7 +305,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 60),
-              child: CustomScrollviewAppBar(offset: _offset),
+              child: CustomScrollviewAppBar(offset: offset),
             ),
             const SizedBox(
               height: 50,

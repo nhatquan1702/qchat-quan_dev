@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/view/component/provider/phone_number_notifier.dart';
 import 'package:chat_app/view/component/show_snackbar.dart';
 import 'package:chat_app/view/screen/login/login_vew_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -21,7 +21,6 @@ class _RegisterWithPhoneNumberState
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController controller = TextEditingController();
   String initialCountry = 'VN';
-  PhoneNumber numberPhone = PhoneNumber(isoCode: 'VN');
 
   @override
   void dispose() {
@@ -33,13 +32,18 @@ class _RegisterWithPhoneNumberState
     if (phoneNumber.isNotEmpty) {
       ref.read(authViewModelProvider).signInWithPhone(context, phoneNumber);
     } else {
-      showSnackBar(context: context, content: 'Fill out all the fields');
+      showSnackBarFailure(
+        context: context,
+        title: ConstantStrings.reload,
+        message: ConstantStrings.notValidNumberPhone,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final appColor = Theme.of(context);
+    PhoneNumber phoneNumber = ref.watch(phoneNumberProvider).phoneNumber;
 
     return Scaffold(
       backgroundColor: appColor.cardColor,
@@ -102,10 +106,9 @@ class _RegisterWithPhoneNumberState
                     children: [
                       InternationalPhoneNumberInput(
                         onInputChanged: (PhoneNumber number) {
-                          setState(() {
-                            numberPhone = number;
-                          });
-                          print(number.phoneNumber);
+                          ref
+                              .read(phoneNumberProvider)
+                              .updatePhoneNumber(number);
                         },
                         onInputValidated: (bool value) {
                           //print(value);
@@ -135,7 +138,7 @@ class _RegisterWithPhoneNumberState
                         selectorTextStyle: TextStyle(
                           color: appColor.canvasColor,
                         ),
-                        initialValue: numberPhone,
+                        initialValue: phoneNumber,
                         textFieldController: controller,
                         formatInput: false,
                         maxLength: 9,
@@ -156,10 +159,7 @@ class _RegisterWithPhoneNumberState
                           ),
                         ),
                         onSaved: (PhoneNumber number) {
-                          if (kDebugMode) {
-                            print('On Saved: ');
-                            print(number.phoneNumber);
-                          }
+
                         },
                       ),
                       Positioned(
@@ -184,8 +184,18 @@ class _RegisterWithPhoneNumberState
                 child: MaterialButton(
                   minWidth: double.infinity,
                   onPressed: () {
-                    final String tmp = numberPhone.phoneNumber.toString().trim();
-                    sendPhoneNumber(tmp);
+                    final String tmp =
+                         phoneNumber.phoneNumber.toString().trim();
+                    //sendPhoneNumber(tmp);
+                    Navigator.pushNamed(
+                      context,
+                      ConstantStringsRoute.routeToVerificationScreen,
+                      arguments: {
+                        'phoneNumber': phoneNumber,
+                        'verificationId': 'verificationId',
+                        'resendToken': 'resendToken',
+                      },
+                    );
                   },
                   color: appColor.primaryColor,
                   shape: RoundedRectangleBorder(

@@ -38,9 +38,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     if (!scrollController.hasClients) {
       return;
     }
-
     var scrollPosition = scrollController.position;
-
     if (scrollPosition.maxScrollExtent > scrollPosition.minScrollExtent) {
       scrollController.animateTo(
         scrollPosition.maxScrollExtent,

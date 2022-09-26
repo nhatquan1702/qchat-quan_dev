@@ -46,50 +46,5 @@ class ProfilePic extends StatelessWidget {
         ),
       ],
     );
-    // return SizedBox(
-    //   height: 115,
-    //   width: 115,
-    //   child: Stack(
-    //     fit: StackFit.expand,
-    //     clipBehavior: Clip.none,
-    //     children: [
-    //       Container(
-    //         decoration: BoxDecoration(
-    //           borderRadius: const BorderRadius.all(Radius.circular(115 / 2)),
-    //           border: Border.all(
-    //             color: Theme.of(context).cardColor,
-    //             width: 4.0,
-    //           ),
-    //         ),
-    //         child: ClipRRect(
-    //           borderRadius: BorderRadius.circular(115 / 2),
-    //           child: Image.network(
-    //               'https://res.cloudinary.com/dmfrvd4tl/image/upload/v1656947957/AI%20QMusic/01fdd3f9a49bc8b528fbf66b13393bf316ba8d97a9_laxhlx.jpg',
-    //               fit: BoxFit.cover),
-    //         ),
-    //       ),
-    //       Positioned(
-    //         right: 0,
-    //         bottom: 0,
-    //         child: SizedBox(
-    //           height: 32,
-    //           width: 32,
-    //           child: TextButton(
-    //             style: TextButton.styleFrom(
-    //               shape: RoundedRectangleBorder(
-    //                 borderRadius: BorderRadius.circular(50),
-    //                 side: const BorderSide(color: Colors.white),
-    //               ),
-    //               primary: Colors.white,
-    //               backgroundColor: const Color(0xFFC4C4C4),
-    //             ),
-    //             onPressed: () {},
-    //             child: const Icon(Icons.camera_alt, size: 16,),
-    //           ),
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // );
   }
 }

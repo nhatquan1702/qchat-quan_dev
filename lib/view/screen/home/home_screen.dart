@@ -2,7 +2,7 @@ import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/screen/home/tab_chat.dart';
 import 'package:chat_app/view/screen/home/tab_friend.dart';
 import 'package:chat_app/view/screen/home/tab_profile.dart';
-import 'package:chat_app/view/screen/home/view_model/home_tab_notifier.dart';
+import 'package:chat_app/view/component/provider/home_tab_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

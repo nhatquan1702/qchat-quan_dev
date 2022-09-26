@@ -1,34 +1,34 @@
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/view/component/provider/obscure_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginState();
+  ConsumerState<LoginScreen> createState() => _LoginState();
 }
 
-class _LoginState extends State<LoginScreen> {
-  bool _isObscure = true;
+class _LoginState extends ConsumerState<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   TextEditingController passController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   void updateStatus() {
     setState(
       () {
-        _isObscure = !_isObscure;
+        ref.read(obscureProvider).updateObscure();
       },
     );
   }
 
-  bool changeButton = false;
   moveToHome(BuildContext context) async {
-    phoneController.text = 'quan123@gmail.com';
+    phoneController.text = '+84 356 329 294';
     passController.text = 'Quan@.123';
     if (formKey.currentState!.validate()) {
-      setState(() {
-        changeButton = true;
-      });
+      if(mounted){
+        ref.read(obscureProvider).updateButton(true);
+      }
       await Future.delayed(const Duration(seconds: 1));
       // ignore: use_build_context_synchronously
       Navigator.pushReplacementNamed(
@@ -36,15 +36,25 @@ class _LoginState extends State<LoginScreen> {
         ConstantStringsRoute.routeToHomeScreen,
       );
       await Future.delayed(const Duration(seconds: 2));
-      setState(() {
-        changeButton = false;
-      });
+      if(mounted){
+        ref.read(obscureProvider).updateButton(false);
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    phoneController.dispose();
+    passController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final appColor = Theme.of(context);
+    bool isObscure = ref.watch(obscureProvider).isObscure;
+    bool changeButton = ref.watch(obscureProvider).changeButton;
+
     return Scaffold(
       backgroundColor: appColor.cardColor,
       resizeToAvoidBottomInset: false,
@@ -112,7 +122,7 @@ class _LoginState extends State<LoginScreen> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
-                              !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              !RegExp(r"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$")
                                   .hasMatch(value)) {
                             return ConstantStrings.notValidNumberPhone;
                           } else {
@@ -129,7 +139,7 @@ class _LoginState extends State<LoginScreen> {
                           fontWeight: FontWeight.w400,
                         ),
                         controller: passController,
-                        obscureText: _isObscure,
+                        obscureText: isObscure,
                         decoration: InputDecoration(
                           floatingLabelStyle: TextStyle(
                             color: appColor.canvasColor.withOpacity(0.5),
@@ -159,7 +169,7 @@ class _LoginState extends State<LoginScreen> {
                           ),
                           suffixIcon: IconButton(
                             onPressed: () => updateStatus(),
-                            icon: _isObscure
+                            icon: isObscure
                                 ? Icon(
                                     Icons.visibility_off,
                                     color:

@@ -1,9 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/view/component/provider/verification_notifier.dart';
 import 'package:chat_app/view/component/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:async';
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends ConsumerStatefulWidget {
@@ -22,62 +22,18 @@ class VerificationScreen extends ConsumerStatefulWidget {
 }
 
 class _VerificationScreenState extends ConsumerState<VerificationScreen> {
-  bool _isResendAgain = false;
-  bool _isVerified = false;
-  bool _isLoading = false;
   final TextEditingController _pinPutController = TextEditingController();
-
   final String _code = '';
 
-  late Timer _timer;
-  int _start = 60;
-  int _currentIndex = 0;
-
-  void resend() {
-    setState(() {
-      _isResendAgain = true;
-    });
-
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(oneSec, (timer) {
-      setState(() {
-        if (_start == 0) {
-          _start = 60;
-          _isResendAgain = false;
-          timer.cancel();
-        } else {
-          _start--;
-        }
-      });
-    });
-  }
-
-  verify() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    const oneSec = Duration(milliseconds: 2000);
-    _timer = Timer.periodic(oneSec, (timer) {
-      setState(() {
-        _isLoading = false;
-        _isVerified = true;
-      });
-    });
+  @override
+  void dispose() {
+    _pinPutController.dispose();
+    super.dispose();
   }
 
   @override
   void initState() {
-    Timer.periodic(const Duration(seconds: 5), (timer) {
-      setState(() {
-        _currentIndex++;
-
-        if (_currentIndex == 3) {
-          _currentIndex = 0;
-        }
-      });
-    });
-
+    ref.read(verificationProvider).updateCurrentIndex();
     super.initState();
   }
 
@@ -101,6 +57,12 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     final appColor = Theme.of(context);
+    int currentIndex = ref.watch(verificationProvider).currentIndex;
+    bool isResendAgain = ref.watch(verificationProvider).isResendAgain;
+    int start = ref.watch(verificationProvider).start;
+    bool isLoading = ref.watch(verificationProvider).isLoading;
+    bool isVerified = ref.watch(verificationProvider).isVerified;
+
     return Scaffold(
       backgroundColor: appColor.cardColor,
       body: SingleChildScrollView(
@@ -121,7 +83,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                     right: 0,
                     bottom: 0,
                     child: AnimatedOpacity(
-                      opacity: _currentIndex == 0 ? 1 : 0,
+                      opacity: currentIndex == 0 ? 1 : 0,
                       duration: const Duration(
                         seconds: 1,
                       ),
@@ -137,7 +99,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                     right: 0,
                     bottom: 0,
                     child: AnimatedOpacity(
-                      opacity: _currentIndex == 1 ? 1 : 0,
+                      opacity: currentIndex == 1 ? 1 : 0,
                       duration: const Duration(seconds: 1),
                       curve: Curves.linear,
                       child: Image.network(
@@ -151,7 +113,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                     right: 0,
                     bottom: 0,
                     child: AnimatedOpacity(
-                      opacity: _currentIndex == 2 ? 1 : 0,
+                      opacity: currentIndex == 2 ? 1 : 0,
                       duration: const Duration(seconds: 1),
                       curve: Curves.linear,
                       child: Image.network(
@@ -225,12 +187,12 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        if (_isResendAgain) return;
-                        resend();
+                        if (isResendAgain) return;
+                        ref.read(verificationProvider).resend();
                       },
                       child: Text(
-                        _isResendAgain
-                            ? "Còn $_start giây"
+                        isResendAgain
+                            ? "Còn $start giây"
                             : ConstantStrings.resendOTP,
                         style: TextStyle(color: appColor.primaryColor),
                       ),
@@ -267,12 +229,12 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                           // );
                         }
                       : () {
-                          verify();
+                          ref.read(verificationProvider).verify();
                         },
                   color: appColor.primaryColor,
                   minWidth: MediaQuery.of(context).size.width,
                   height: 50,
-                  child: _isLoading
+                  child: isLoading
                       ? SizedBox(
                           width: 20,
                           height: 20,
@@ -282,7 +244,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                             color: appColor.canvasColor,
                           ),
                         )
-                      : _isVerified
+                      : isVerified
                           ? Icon(
                               Icons.check_circle,
                               color: appColor.cardColor,
