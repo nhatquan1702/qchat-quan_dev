@@ -1,25 +1,27 @@
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/view/component/update_image.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_menu_item.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_top.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EditProfileScreen extends StatefulWidget {
+class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final appColor = Theme.of(context);
     return Scaffold(
-      backgroundColor: appColor.cardColor.withOpacity(0.9),
+      backgroundColor: appColor.cardColor,
       appBar: AppBar(
         elevation: 0.2,
-        shadowColor: Theme.of(context).canvasColor,
-        backgroundColor: appColor.cardColor.withOpacity(0.9),
+        shadowColor: appColor.canvasColor,
+        backgroundColor: appColor.cardColor,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -48,7 +50,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            const ProfilePic(),
+            ProfilePic(
+              imageAvatar: null,
+              imageCover: null,
+              funPickAvatar: () => showChoiceImageDialog(
+                context,
+                ConstantStrings.avatar,
+                ref,
+                ConstantStrings.seeCover,
+              ),
+              funPickCover: () => showChoiceImageDialog(
+                context,
+                ConstantStrings.cover,
+                ref,
+                ConstantStrings.seeCover,
+              ),
+            ),
             const SizedBox(height: 20),
             ProfileMenu(
               text: ConstantStrings.updateAvatar,

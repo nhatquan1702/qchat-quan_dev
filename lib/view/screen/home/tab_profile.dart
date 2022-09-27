@@ -4,11 +4,11 @@ import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/button_in_appbar.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
 import 'package:chat_app/view/component/provider/scroll_notifier.dart';
+import 'package:chat_app/view/component/update_image.dart';
 import 'package:chat_app/view/screen/home/widget/custom_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 class TabProfile extends ConsumerStatefulWidget {
   const TabProfile({Key? key}) : super(key: key);
@@ -125,129 +125,16 @@ class _TabCallsState extends ConsumerState<TabProfile> {
     );
   }
 
-  Future<void> _showChoiceDialog(BuildContext context) {
-    final myColor = Theme.of(context);
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              ConstantStrings.avatar,
-              style: TextStyle(
-                color: myColor.primaryColor,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: [
-                  Divider(
-                    height: 1,
-                    color: myColor.primaryColor,
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        ConstantStringsRoute.routeToShowImageScreen,
-                      );
-                    },
-                    title: const Text(ConstantStrings.seeAvatar),
-                    leading: Icon(
-                      Icons.remove_red_eye,
-                      color: myColor.primaryColor,
-                    ),
-                  ),
-                  Divider(
-                    height: 1,
-                    color: myColor.primaryColor,
-                  ),
-                  ListTile(
-                    onTap: () {
-                      _openGallery(context);
-                    },
-                    title: const Text(
-                      ConstantStrings.pickImageGallery,
-                    ),
-                    leading: Icon(
-                      Icons.account_box,
-                      color: myColor.primaryColor,
-                    ),
-                  ),
-                  Divider(
-                    height: 1,
-                    color: myColor.primaryColor,
-                  ),
-                  ListTile(
-                    onTap: () {
-                      _openCamera(context);
-                    },
-                    title: const Text(
-                      ConstantStrings.pickImageCamera,
-                    ),
-                    leading: Icon(
-                      Icons.camera_alt,
-                      color: myColor.primaryColor,
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    title: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        primary: myColor.primaryColor,
-                      ),
-                      child: Text(
-                        ConstantStrings.cancel,
-                        style: TextStyle(
-                          color: myColor.cardColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  void _openGallery(BuildContext context) async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    // ignore: use_build_context_synchronously
-    ref.read(pickerImageProvider.notifier).pickedImage(pickedFile!);
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
-  }
-
-  void _openCamera(BuildContext context) async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    // ignore: use_build_context_synchronously
-    ref.read(pickerImageProvider.notifier).pickedImage(pickedFile!);
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
-  }
-
   Widget _buildAvatarImg() {
     final imagePicked = ref.watch(pickerImageProvider).xFile;
     return InkWell(
       onTap: () {
-        _showChoiceDialog(context);
+        showChoiceImageDialog(
+          context,
+          ConstantStrings.avatar,
+          ref,
+          ConstantStrings.seeAvatar,
+        );
       },
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(144 / 2),
@@ -305,7 +192,15 @@ class _TabCallsState extends ConsumerState<TabProfile> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 60),
-              child: CustomScrollviewAppBar(offset: offset),
+              child: CustomScrollviewAppBar(
+                offset: offset,
+                onTap: () => showChoiceImageDialog(
+                  context,
+                  ConstantStrings.cover,
+                  ref,
+                  ConstantStrings.seeCover,
+                ),
+              ),
             ),
             const SizedBox(
               height: 50,
