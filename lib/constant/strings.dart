@@ -29,6 +29,8 @@ class ConstantStrings {
   static const String editProfile = 'CHỈNH SỬA TRANG CÁ NHÂN';
   static const String avatar = 'Ảnh đại diện';
   static const String seeAvatar = 'Xem ảnh đại diện';
+  static const String cover = 'Ảnh bìa';
+  static const String seeCover = 'Xem ảnh bìa';
   static const String pickImageGallery = 'Chọn từ thư viên';
   static const String pickImageCamera = 'Chụp ảnh mới';
   static const String cancel = 'Huỷ';
