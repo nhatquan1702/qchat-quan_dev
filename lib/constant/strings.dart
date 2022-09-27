@@ -15,6 +15,7 @@ class ConstantStrings {
   static const String notValidPassword = 'Mật khẩu không hợp lệ!';
   static const String sendOTP = 'Gửi mã xác minh';
   static const String verification = 'Xác minh';
+  static const String verificationFalse = 'Mã xác minh chưa chính xác!';
   static const String notSendOTP = 'Bạn chưa nhận được mã?';
   static const String resendOTP = 'Gửi lại';
   static const String enterMessage = 'Nhập tin nhắn...';

@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/provider/verification_notifier.dart';
 import 'package:chat_app/view/component/show_snackbar.dart';
+import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
@@ -23,7 +24,14 @@ class VerificationScreen extends ConsumerStatefulWidget {
 
 class _VerificationScreenState extends ConsumerState<VerificationScreen> {
   final TextEditingController _pinPutController = TextEditingController();
-  final String _code = '';
+
+  void verifyOTP(WidgetRef ref, BuildContext context, String userOTP) {
+    ref.read(authViewModelProvider).verifyOTP(
+          context,
+          widget.verificationId,
+          userOTP,
+        );
+  }
 
   @override
   void dispose() {
@@ -165,7 +173,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                   defaultPinTheme: defaultPinTheme(context),
                   controller: _pinPutController,
                   pinAnimationType: PinAnimationType.fade,
-                  onSubmitted: (pin) async {},
+                  onCompleted: (pin) {},
                 ),
               ),
 
@@ -214,21 +222,24 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                     ),
                   ),
                   elevation: 0,
-                  onPressed: _code.length < 6
+                  onPressed: _pinPutController.text.toString().trim().length < 6
                       ? () {
-                          showSnackBarSuccess(
+                          showSnackBarFailure(
                             context: context,
-                            title: 'Xác minh',
-                            message: '     Resend code: ${
-                                widget.resendToken.toString()
-                            }',
+                            title: ConstantStrings.verification,
+                            message: ConstantStrings.verificationFalse,
+                          );
+                        }
+                      : () {
+                          verifyOTP(
+                            ref,
+                            context,
+                            _pinPutController.text.toString().trim(),
                           );
                           // Navigator.pushNamed(
                           //   context,
                           //   ConstantStringsRoute.routeToLoginScreen,
                           // );
-                        }
-                      : () {
                           ref.read(verificationProvider).verify();
                         },
                   color: appColor.primaryColor,

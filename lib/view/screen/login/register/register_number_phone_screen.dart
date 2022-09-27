@@ -186,16 +186,16 @@ class _RegisterWithPhoneNumberState
                   onPressed: () {
                     final String tmp =
                          phoneNumber.phoneNumber.toString().trim();
-                    //sendPhoneNumber(tmp);
-                    Navigator.pushNamed(
-                      context,
-                      ConstantStringsRoute.routeToVerificationScreen,
-                      arguments: {
-                        'phoneNumber': tmp,
-                        'verificationId': 'verificationId',
-                        'resendToken': 'resendToken',
-                      },
-                    );
+                    sendPhoneNumber(tmp);
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   ConstantStringsRoute.routeToVerificationScreen,
+                    //   arguments: {
+                    //     'phoneNumber': tmp,
+                    //     'verificationId': 'verificationId',
+                    //     'resendToken': 'resendToken',
+                    //   },
+                    // );
                   },
                   color: appColor.primaryColor,
                   shape: RoundedRectangleBorder(

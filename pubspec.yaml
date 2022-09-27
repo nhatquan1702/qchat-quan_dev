@@ -47,6 +47,7 @@ dependencies:
   photo_view: ^0.14.0
   avatar_glow: ^2.0.2
   awesome_snackbar_content: ^0.0.8
+  simple_animations: ^5.0.0+2
 
 dev_dependencies:
   flutter_test:
