@@ -33,7 +33,10 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
 
   @override
   void initState() {
-    ref.read(verificationProvider).updateCurrentIndex();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(verificationProvider).updateCurrentIndex();
+      _pinPutController.text = "";
+    });
     super.initState();
   }
 
