@@ -50,6 +50,9 @@ class ConstantStrings {
   static const String error  = 'Lỗi';
   static const String updateInformation  = 'Cập nhật thông tin';
   static const String completed  = 'Hoàn tất';
+  static const String notification  = 'Thông báo';
+  static const String pleasePickImageAvatar  = 'Vui lòng chọn ảnh đại diện';
+  static const String pleasePickImageCover  = 'Vui lòng chọn ảnh bìa';
 }
 class ConstantStringsRoute{
   static const String routeToRegisterNumberPhoneScreen = '/register-number_phone-screen';

@@ -1,6 +1,6 @@
 import 'package:chat_app/constant/fakeData.dart';
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/view/component/button_in_appbar.dart';
+import 'package:chat_app/view/component/widget/button_in_appbar.dart';
 import 'package:chat_app/view/screen/chat/chat_user_list_item.dart';
 import 'package:flutter/material.dart';
 

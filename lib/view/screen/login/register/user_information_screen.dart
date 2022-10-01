@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/view/component/base_button.dart';
+import 'package:chat_app/view/component/widget/base_button.dart';
 import 'package:chat_app/view/component/provider/obscure_notifier.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
-import 'package:chat_app/view/component/show_dialog_update_image.dart';
+import 'package:chat_app/view/component/widget/show_dialog_update_image.dart';
+import 'package:chat_app/view/component/show_snackbar.dart';
+import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_top.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,17 +33,22 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
     ref.read(obscureProvider).updateObscureAgain();
   }
 
-  moveToHome(BuildContext context) async {
-    nameController.text = 'Quang Phạm';
-    passController.text = 'Quan@.123';
-    passAgainController.text = 'Quan@.123';
-    if (formKey.currentState!.validate()) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(
-        context,
-        ConstantStringsRoute.routeToHomeScreen,
-      );
-    }
+  void saveDataUserToFirebase(
+    BuildContext context,
+    String name,
+    File imageAvatar,
+    File imageCover,
+  ) async {
+    ref.read(authViewModelProvider).saveUserDataToFirebase(
+          context,
+          name,
+          imageAvatar,
+          imageCover,
+        );
+    Navigator.pushReplacementNamed(
+      context,
+      ConstantStringsRoute.routeToHomeScreen,
+    );
   }
 
   @override
@@ -275,10 +282,33 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
                   color: appColor.primaryColor,
                   rootContext: context,
                   onTap: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      ConstantStringsRoute.routeToHomeScreen,
-                    );
+                    nameController.text = 'Quang Phạm';
+                    passController.text = 'Quan@.123';
+                    passAgainController.text = 'Quan@.123';
+                    String name = nameController.text.toString().trim();
+                    if (imageAvatar == null) {
+                      showSnackBarWarning(
+                        context: context,
+                        title: ConstantStrings.notification,
+                        message: ConstantStrings.pleasePickImageAvatar,
+                      );
+                    }
+                    else if (imageCover == null) {
+                      showSnackBarWarning(
+                        context: context,
+                        title: ConstantStrings.notification,
+                        message: ConstantStrings.pleasePickImageCover,
+                      );
+                    }
+                    else if (formKey.currentState!.validate()) {
+                      // ignore: use_build_context_synchronously
+                      saveDataUserToFirebase(
+                        context,
+                        name,
+                        imageAvatar,
+                        imageCover,
+                      );
+                    }
                   },
                 ),
               ],

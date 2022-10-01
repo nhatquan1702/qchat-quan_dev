@@ -1,7 +1,7 @@
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/view/component/error/error_screen.dart';
 import 'package:chat_app/view/screen/chat/chat_screen.dart';
 import 'package:chat_app/view/screen/dial/dial_screen.dart';
-import 'package:chat_app/view/screen/error/error_screen.dart';
 import 'package:chat_app/view/screen/home/home_screen.dart';
 import 'package:chat_app/view/screen/home/widget/show_image.dart';
 import 'package:chat_app/view/screen/login/login_screen.dart';

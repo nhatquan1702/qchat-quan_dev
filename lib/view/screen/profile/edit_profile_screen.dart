@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
-import 'package:chat_app/view/component/show_dialog_update_image.dart';
+import 'package:chat_app/view/component/widget/show_dialog_update_image.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_menu_item.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_top.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +65,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ref,
                 ConstantStrings.seeAvatar,
                 true,
-                false,
+                imagePickedAvatar == null ? true : false,
               ),
               funPickCover: () => showChoiceImageDialog(
                 context,
@@ -73,7 +73,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ref,
                 ConstantStrings.seeCover,
                 false,
-                false,
+                imagePickedCover == null ? true : false,
               ),
             ),
             const SizedBox(height: 20),

@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/view/component/button_in_appbar.dart';
+import 'package:chat_app/view/component/widget/button_in_appbar.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
 import 'package:chat_app/view/component/provider/scroll_notifier.dart';
-import 'package:chat_app/view/component/show_dialog_update_image.dart';
+import 'package:chat_app/view/component/widget/show_dialog_update_image.dart';
 import 'package:chat_app/view/screen/home/widget/custom_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -136,7 +136,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
           ref,
           ConstantStrings.seeAvatar,
           true,
-          false,
+          imagePickedAvatar == null ? true : false,
         );
       },
       customBorder: RoundedRectangleBorder(
@@ -210,7 +210,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
                   ref,
                   ConstantStrings.seeCover,
                   false,
-                  false,
+                  imagePickedCover == null ? true : false,
                 ),
                 file: imagePickedCover,
               ),

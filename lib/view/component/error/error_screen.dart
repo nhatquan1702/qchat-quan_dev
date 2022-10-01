@@ -1,5 +1,5 @@
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/view/component/base_button.dart';
+import 'package:chat_app/view/component/widget/base_button.dart';
 import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {

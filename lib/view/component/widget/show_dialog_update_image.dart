@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/view/component/picker_image.dart';
+import 'package:chat_app/view/component/widget/picker_image.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +12,7 @@ Future<void> showChoiceImageDialog(
   WidgetRef ref,
   String titleSee,
   bool isAvatar,
-  bool isFirst,
+  bool isHintSeeImage,
 ) {
   final myColor = Theme.of(context);
 
@@ -49,13 +49,13 @@ Future<void> showChoiceImageDialog(
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                isFirst
+                isHintSeeImage
                     ? const SizedBox()
                     : Divider(
                         height: 1,
                         color: myColor.primaryColor,
                       ),
-                isFirst
+                isHintSeeImage
                     ? const SizedBox()
                     : ListTile(
                         onTap: () {
