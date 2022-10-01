@@ -189,7 +189,7 @@ class _RegisterWithPhoneNumberState
                         // ignore: use_build_context_synchronously
                         final String tmp =
                             phoneNumber.phoneNumber.toString().trim();
-                        //sendPhoneNumber(tmp);
+                        sendPhoneNumber(tmp);
                         Navigator.pushNamed(
                           context,
                           ConstantStringsRoute.routeToVerificationScreen,
@@ -262,88 +262,88 @@ class _RegisterWithPhoneNumberState
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
-                FadeInDown(
-                  delay: const Duration(milliseconds: 600),
-                  child: MaterialButton(
-                    minWidth: double.infinity,
-                    onPressed: () {
-                      final String tmp =
-                          phoneNumber.phoneNumber.toString().trim();
-                      sendPhoneNumber(tmp);
-                      // Navigator.pushNamed(
-                      //   context,
-                      //   ConstantStringsRoute.routeToVerificationScreen,
-                      //   arguments: {
-                      //     'phoneNumber': tmp,
-                      //     'verificationId': 'verificationId',
-                      //     'resendToken': 'resendToken',
-                      //   },
-                      // );
-                    },
-                    color: appColor.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 30,
-                    ),
-                    child: _isLoading
-                        ? SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              backgroundColor: appColor.cardColor,
-                              color: appColor.canvasColor,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : Text(
-                            ConstantStrings.sendOTP,
-                            style: TextStyle(
-                              color: appColor.cardColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                FadeInDown(
-                  delay: const Duration(milliseconds: 800),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        ConstantStrings.haveAccount,
-                        style: TextStyle(
-                          color: appColor.canvasColor.withOpacity(0.5),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            ConstantStringsRoute.routeToLoginScreen,
-                          );
-                        },
-                        child: Text(
-                          ConstantStrings.login,
-                          style: TextStyle(
-                            color: appColor.primaryColor,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
+                // const SizedBox(
+                //   height: 24,
+                // ),
+                // FadeInDown(
+                //   delay: const Duration(milliseconds: 600),
+                //   child: MaterialButton(
+                //     minWidth: double.infinity,
+                //     onPressed: () {
+                //       final String tmp =
+                //           phoneNumber.phoneNumber.toString().trim();
+                //       sendPhoneNumber(tmp);
+                //       // Navigator.pushNamed(
+                //       //   context,
+                //       //   ConstantStringsRoute.routeToVerificationScreen,
+                //       //   arguments: {
+                //       //     'phoneNumber': tmp,
+                //       //     'verificationId': 'verificationId',
+                //       //     'resendToken': 'resendToken',
+                //       //   },
+                //       // );
+                //     },
+                //     color: appColor.primaryColor,
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     padding: const EdgeInsets.symmetric(
+                //       vertical: 15,
+                //       horizontal: 30,
+                //     ),
+                //     child: _isLoading
+                //         ? SizedBox(
+                //             width: 20,
+                //             height: 20,
+                //             child: CircularProgressIndicator(
+                //               backgroundColor: appColor.cardColor,
+                //               color: appColor.canvasColor,
+                //               strokeWidth: 2,
+                //             ),
+                //           )
+                //         : Text(
+                //             ConstantStrings.sendOTP,
+                //             style: TextStyle(
+                //               color: appColor.cardColor,
+                //               fontWeight: FontWeight.w600,
+                //             ),
+                //           ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // FadeInDown(
+                //   delay: const Duration(milliseconds: 800),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Text(
+                //         ConstantStrings.haveAccount,
+                //         style: TextStyle(
+                //           color: appColor.canvasColor.withOpacity(0.5),
+                //         ),
+                //       ),
+                //       const SizedBox(
+                //         width: 5,
+                //       ),
+                //       InkWell(
+                //         onTap: () {
+                //           Navigator.pushNamed(
+                //             context,
+                //             ConstantStringsRoute.routeToLoginScreen,
+                //           );
+                //         },
+                //         child: Text(
+                //           ConstantStrings.login,
+                //           style: TextStyle(
+                //             color: appColor.primaryColor,
+                //           ),
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),

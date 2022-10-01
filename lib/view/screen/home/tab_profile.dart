@@ -1,10 +1,9 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/button_in_appbar.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
 import 'package:chat_app/view/component/provider/scroll_notifier.dart';
-import 'package:chat_app/view/component/update_image.dart';
+import 'package:chat_app/view/component/show_dialog_update_image.dart';
 import 'package:chat_app/view/screen/home/widget/custom_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -125,8 +124,10 @@ class _TabCallsState extends ConsumerState<TabProfile> {
     );
   }
 
-  Widget _buildAvatarImg() {
-    final imagePicked = ref.watch(pickerImageProvider).xFile;
+  Widget _buildAvatarImg(BuildContext context) {
+    final imagePickedAvatar = ref.watch(pickerImageProvider).fileAvatar;
+    final appColor = Theme.of(context);
+
     return InkWell(
       onTap: () {
         showChoiceImageDialog(
@@ -134,6 +135,8 @@ class _TabCallsState extends ConsumerState<TabProfile> {
           ConstantStrings.avatar,
           ref,
           ConstantStrings.seeAvatar,
+          true,
+          false,
         );
       },
       customBorder: RoundedRectangleBorder(
@@ -151,14 +154,18 @@ class _TabCallsState extends ConsumerState<TabProfile> {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(144 / 2),
-          child: imagePicked != null
-              ? Image.file(
-                  File(imagePicked.path),
-                  fit: BoxFit.cover,
+          child: imagePickedAvatar == null
+              ? Container(
+                  color: appColor.canvasColor.withOpacity(0.1),
+                  child: Icon(
+                    Icons.add_a_photo_outlined,
+                    color: appColor.canvasColor,
+                  ),
                 )
-              : Image.network(
-                  'https://res.cloudinary.com/dmfrvd4tl/image/upload/v1656947957/AI%20QMusic/01fdd3f9a49bc8b528fbf66b13393bf316ba8d97a9_laxhlx.jpg',
-                  fit: BoxFit.cover),
+              : Image.file(
+                  imagePickedAvatar,
+                  fit: BoxFit.cover,
+                ),
         ),
       ),
     );
@@ -184,6 +191,8 @@ class _TabCallsState extends ConsumerState<TabProfile> {
 
   Widget _buildBody(BuildContext context) {
     double offset = ref.watch(scrollableProvider).offset;
+    final imagePickedCover = ref.watch(pickerImageProvider).fileCover;
+
     return Column(
       children: [
         Stack(
@@ -193,19 +202,23 @@ class _TabCallsState extends ConsumerState<TabProfile> {
             Padding(
               padding: const EdgeInsets.only(bottom: 60),
               child: CustomScrollviewAppBar(
+                //ảnh bìa
                 offset: offset,
                 onTap: () => showChoiceImageDialog(
                   context,
                   ConstantStrings.cover,
                   ref,
                   ConstantStrings.seeCover,
+                  false,
+                  false,
                 ),
+                file: imagePickedCover,
               ),
             ),
             const SizedBox(
               height: 50,
             ),
-            _buildAvatarImg()
+            _buildAvatarImg(context)
           ],
         ),
         const SizedBox(

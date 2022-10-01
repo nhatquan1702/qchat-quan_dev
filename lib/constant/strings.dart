@@ -42,6 +42,14 @@ class ConstantStrings {
   static const String updateNumberPhone = 'Cập nhật số điện thoại';
   static const String updateIntroduction = 'Cập nhật giới thiệu bản thân';
   static const String logout = 'Đăng xuất';
+  static const String name  = 'Tên';
+  static const String hintName = 'Nhập tên';
+  static const String notValidName = 'Tên không hợp lệ!';
+  static const String againPassword  = 'Xác nhận mật khẩu';
+  static const String hintAgainPassword  = 'Nhập lại mật khẩu';
+  static const String error  = 'Lỗi';
+  static const String updateInformation  = 'Cập nhật thông tin';
+  static const String completed  = 'Hoàn tất';
 }
 class ConstantStringsRoute{
   static const String routeToRegisterNumberPhoneScreen = '/register-number_phone-screen';
@@ -52,4 +60,5 @@ class ConstantStringsRoute{
   static const String routeToEditProfileScreen = '/edit-profile-screen';
   static const String routeToVerificationScreen = '/verification-screen';
   static const String routeToShowImageScreen = '/show-image-screen';
+  static const String routeToShowUserInformationScreen = '/show-user-information-screen';
 }

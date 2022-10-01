@@ -1,11 +1,41 @@
+import 'dart:io';
+
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/view/component/picker_image.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
-Future<void> showChoiceImageDialog(BuildContext context, String titleDialog, WidgetRef ref, String titleSee) {
+Future<void> showChoiceImageDialog(
+  BuildContext context,
+  String titleDialog,
+  WidgetRef ref,
+  String titleSee,
+  bool isAvatar,
+  bool isFirst,
+) {
   final myColor = Theme.of(context);
+
+  void _selectImageAvatarFromGallery() async {
+    File? imageAvatar = await pickImageFromGallery(context);
+    ref.read(pickerImageProvider).pickedFirstAvatarImage(imageAvatar!);
+  }
+
+  void _selectImageAvatarFromCamera() async {
+    File? imageAvatar = await pickImageFromCamera(context);
+    ref.read(pickerImageProvider).pickedFirstAvatarImage(imageAvatar!);
+  }
+
+  void _selectImageCoverFromGallery() async {
+    File? imageCover = await pickImageFromGallery(context);
+    ref.read(pickerImageProvider).pickedFirstCoverImage(imageCover!);
+  }
+
+  void _selectImageCoverFromCamera() async {
+    File? imageCover = await pickImageFromCamera(context);
+    ref.read(pickerImageProvider).pickedFirstCoverImage(imageCover!);
+  }
+
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -19,30 +49,40 @@ Future<void> showChoiceImageDialog(BuildContext context, String titleDialog, Wid
           content: SingleChildScrollView(
             child: ListBody(
               children: [
+                isFirst
+                    ? const SizedBox()
+                    : Divider(
+                        height: 1,
+                        color: myColor.primaryColor,
+                      ),
+                isFirst
+                    ? const SizedBox()
+                    : ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            ConstantStringsRoute.routeToShowImageScreen,
+                          );
+                        },
+                        title: Text(titleSee),
+                        leading: Icon(
+                          Icons.remove_red_eye,
+                          color: myColor.primaryColor,
+                        ),
+                      ),
                 Divider(
                   height: 1,
                   color: myColor.primaryColor,
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      ConstantStringsRoute.routeToShowImageScreen,
-                    );
-                  },
-                  title: Text(titleSee),
-                  leading: Icon(
-                    Icons.remove_red_eye,
-                    color: myColor.primaryColor,
-                  ),
-                ),
-                Divider(
-                  height: 1,
-                  color: myColor.primaryColor,
-                ),
-                ListTile(
-                  onTap: () {
-                    _openGallery(context, ref);
+                    if (isAvatar) {
+                      _selectImageAvatarFromGallery();
+                      Navigator.pop(context);
+                    } else {
+                      _selectImageCoverFromGallery();
+                      Navigator.pop(context);
+                    }
                   },
                   title: const Text(
                     ConstantStrings.pickImageGallery,
@@ -58,7 +98,13 @@ Future<void> showChoiceImageDialog(BuildContext context, String titleDialog, Wid
                 ),
                 ListTile(
                   onTap: () {
-                    _openCamera(context, ref);
+                    if (isAvatar) {
+                      _selectImageAvatarFromCamera();
+                      Navigator.pop(context);
+                    } else {
+                      _selectImageCoverFromCamera();
+                      Navigator.pop(context);
+                    }
                   },
                   title: const Text(
                     ConstantStrings.pickImageCamera,
@@ -96,28 +142,4 @@ Future<void> showChoiceImageDialog(BuildContext context, String titleDialog, Wid
           ),
         );
       });
-}
-
-void _openGallery(BuildContext context, WidgetRef ref) async {
-  final pickedFile = await ImagePicker().pickImage(
-    source: ImageSource.gallery,
-    maxWidth: 1800,
-    maxHeight: 1800,
-  );
-  // ignore: use_build_context_synchronously
-  ref.read(pickerImageProvider.notifier).pickedImage(pickedFile!);
-  // ignore: use_build_context_synchronously
-  Navigator.pop(context);
-}
-
-void _openCamera(BuildContext context, WidgetRef ref) async {
-  final pickedFile = await ImagePicker().pickImage(
-    source: ImageSource.camera,
-    maxWidth: 1800,
-    maxHeight: 1800,
-  );
-  // ignore: use_build_context_synchronously
-  ref.read(pickerImageProvider.notifier).pickedImage(pickedFile!);
-  // ignore: use_build_context_synchronously
-  Navigator.pop(context);
 }

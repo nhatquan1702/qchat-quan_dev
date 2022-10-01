@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/view/component/update_image.dart';
+import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
+import 'package:chat_app/view/component/show_dialog_update_image.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_menu_item.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_top.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +19,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final appColor = Theme.of(context);
+    File? imagePickedAvatar = ref.watch(pickerImageProvider).fileAvatar;
+    File? imagePickedCover = ref.watch(pickerImageProvider).fileCover;
+
     return Scaffold(
       backgroundColor: appColor.cardColor,
       appBar: AppBar(
@@ -51,19 +57,23 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         child: Column(
           children: [
             ProfilePic(
-              imageAvatar: null,
-              imageCover: null,
+              imageAvatar: imagePickedAvatar,
+              imageCover: imagePickedCover,
               funPickAvatar: () => showChoiceImageDialog(
                 context,
                 ConstantStrings.avatar,
                 ref,
-                ConstantStrings.seeCover,
+                ConstantStrings.seeAvatar,
+                true,
+                false,
               ),
               funPickCover: () => showChoiceImageDialog(
                 context,
                 ConstantStrings.cover,
                 ref,
                 ConstantStrings.seeCover,
+                false,
+                false,
               ),
             ),
             const SizedBox(height: 20),

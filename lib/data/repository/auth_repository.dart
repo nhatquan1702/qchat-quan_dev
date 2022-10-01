@@ -24,6 +24,7 @@ class AuthRepository {
     try {
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
+        timeout: const Duration(seconds: 60),
         verificationCompleted: (PhoneAuthCredential credential) async {
           await auth.signInWithCredential(credential);
         },
@@ -44,7 +45,11 @@ class AuthRepository {
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context: context, content: e.message!);
+      showSnackBarFailure(
+        context: context,
+        title: ConstantStrings.error,
+        message: e.message!,
+      );
     }
   }
 
@@ -66,7 +71,11 @@ class AuthRepository {
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context: context, content: e.message!);
+      showSnackBarFailure(
+        context: context,
+        title: ConstantStrings.error,
+        message: e.message!,
+      );
     }
   }
 }

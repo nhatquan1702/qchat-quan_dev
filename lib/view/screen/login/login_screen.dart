@@ -15,18 +15,14 @@ class _LoginState extends ConsumerState<LoginScreen> {
   TextEditingController passController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   void updateStatus() {
-    setState(
-      () {
-        ref.read(obscureProvider).updateObscure();
-      },
-    );
+    ref.read(obscureProvider).updateObscure();
   }
 
   moveToHome(BuildContext context) async {
     phoneController.text = '+84 356 329 294';
     passController.text = 'Quan@.123';
     if (formKey.currentState!.validate()) {
-      if(mounted){
+      if (mounted) {
         ref.read(obscureProvider).updateButton(true);
       }
       await Future.delayed(const Duration(seconds: 1));
@@ -36,7 +32,7 @@ class _LoginState extends ConsumerState<LoginScreen> {
         ConstantStringsRoute.routeToHomeScreen,
       );
       await Future.delayed(const Duration(seconds: 2));
-      if(mounted){
+      if (mounted) {
         ref.read(obscureProvider).updateButton(false);
       }
     }

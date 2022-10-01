@@ -239,11 +239,11 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                             context,
                             _pinPutController.text.toString().trim(),
                           );
-                          // Navigator.pushNamed(
-                          //   context,
-                          //   ConstantStringsRoute.routeToLoginScreen,
-                          // );
                           ref.read(verificationProvider).verify();
+                          Navigator.pushNamed(
+                            context,
+                            ConstantStringsRoute.routeToShowUserInformationScreen,
+                          );
                         },
                   color: appColor.primaryColor,
                   minWidth: MediaQuery.of(context).size.width,

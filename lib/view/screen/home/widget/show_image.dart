@@ -18,13 +18,14 @@ class ShowImage extends StatelessWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back,
-              color: Theme.of(context).primaryColor,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
       ),
       body: PhotoView(
         imageProvider: NetworkImage(imgUrl),

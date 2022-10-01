@@ -1,17 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
-class PickerNotifier extends ChangeNotifier {
-  XFile? _xFile;
-  XFile? get xFile => _xFile;
+class PickerImageNotifier extends ChangeNotifier {
+  File? _fileAvatar;
+  File? get fileAvatar => _fileAvatar;
 
-  void pickedImage(XFile xFile) {
-    _xFile = xFile;
+  File? _fileCover;
+  File? get fileCover => _fileCover;
+
+  void pickedFirstAvatarImage(File? fileAvatar) {
+    _fileAvatar = fileAvatar;
+    notifyListeners();
+  }
+
+  void pickedFirstCoverImage(File? fileCover) {
+    _fileCover = fileCover;
     notifyListeners();
   }
 }
 
-final pickerImageProvider = ChangeNotifierProvider<PickerNotifier>((ref) {
-  return PickerNotifier();
+final pickerImageProvider = ChangeNotifierProvider<PickerImageNotifier>((ref) {
+  return PickerImageNotifier();
 });
