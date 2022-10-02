@@ -1,11 +1,17 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:chat_app/constant/fakeData.dart';
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/view/component/enum/message_enum.dart';
+import 'package:chat_app/view/component/provider/obscure_notifier.dart';
 import 'package:chat_app/view/screen/chat/chat_appbar.dart';
+import 'package:chat_app/view/screen/chat/chat_view_model.dart';
 import 'package:chat_app/view/screen/chat/widget/chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
   final String uid;
@@ -26,6 +32,56 @@ class ChatDetailScreen extends ConsumerStatefulWidget {
 
 class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final ScrollController scrollController = ScrollController();
+  final TextEditingController textEditingController = TextEditingController();
+  FlutterSoundRecorder? _soundRecorder;
+  FocusNode focusNode = FocusNode();
+
+  void sendTextMessage(
+    bool isShowSendButton,
+    bool isRecorderInit,
+    bool isRecording,
+  ) async {
+    if (isShowSendButton) {
+      ref.read(chatControllerProvider).sendTextMessage(
+            context,
+            textEditingController.text.toString().trim(),
+            widget.uid,
+            widget.isGroupChat,
+          );
+      setState(() {
+        textEditingController.text = '';
+      });
+    } else {
+      var tempDir = await getTemporaryDirectory();
+      var path = '${tempDir.path}/flutter_sound.aac';
+      if (!isRecorderInit) {
+        return;
+      }
+      if (isRecording) {
+        await _soundRecorder!.stopRecorder();
+        sendFileMessage(File(path), MessageEnum.audio);
+      } else {
+        await _soundRecorder!.startRecorder(
+          toFile: path,
+        );
+      }
+
+      ref.read(obscureProvider).updateStatusRecording();
+    }
+  }
+
+  void sendFileMessage(
+    File file,
+    MessageEnum messageEnum,
+  ) {
+    ref.read(chatControllerProvider).sendFileMessage(
+          context,
+          file,
+          widget.uid,
+          messageEnum,
+          widget.isGroupChat,
+        );
+  }
 
   @override
   void initState() {
@@ -40,11 +96,14 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
         });
       }
     });
+    _soundRecorder = FlutterSoundRecorder();
+    //openAudio();
   }
 
   @override
   void dispose() {
     scrollController.dispose();
+    textEditingController.dispose();
     super.dispose();
   }
 
@@ -64,12 +123,17 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appColor = Theme.of(context);
+    final isShowSendButton = ref.watch(obscureProvider).changeSendButton;
+    final isRecording = ref.watch(obscureProvider).isRecording;
+    final isRecorderInit = ref.watch(obscureProvider).isRecorderInit;
+
     return Scaffold(
       appBar: ChatDetailPageAppBar(
         uid: widget.uid,
       ),
       body: Container(
-        color: Theme.of(context).cardColor.withOpacity(0.8),
+        color: appColor.cardColor.withOpacity(0.8),
         child: Stack(
           children: <Widget>[
             SingleChildScrollView(
@@ -90,7 +154,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                 padding: const EdgeInsets.only(left: 16, bottom: 10),
                 height: 80,
                 width: double.infinity,
-                color: Theme.of(context).cardColor,
+                color: appColor.cardColor,
                 child: Row(
                   children: <Widget>[
                     GestureDetector(
@@ -101,12 +165,12 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).canvasColor.withOpacity(0.3),
+                          color: appColor.canvasColor.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Icon(
                           Icons.add,
-                          color: Theme.of(context).cardColor,
+                          color: appColor.cardColor,
                           size: 20,
                         ),
                       ),
@@ -116,12 +180,19 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     ),
                     Expanded(
                       child: TextField(
+                        controller: textEditingController,
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            ref.read(obscureProvider).updateSendButton(true);
+                          } else {
+                            ref.read(obscureProvider).updateSendButton(false);
+                          }
+                        },
                         decoration: InputDecoration(
                           hintText: ConstantStrings.enterMessage,
                           hintStyle: TextStyle(
-                              color: Theme.of(context)
-                                  .canvasColor
-                                  .withOpacity(0.3)),
+                            color: appColor.canvasColor.withOpacity(0.3),
+                          ),
                           border: InputBorder.none,
                         ),
                       ),
@@ -130,19 +201,32 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                       width: 16,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        _scrollToEnd();
-                      },
+                      onTap: isShowSendButton
+                          ? () {
+                             // _scrollToEnd();
+                              sendTextMessage(
+                                isShowSendButton,
+                                isRecorderInit,
+                                isRecording,
+                              );
+                            }
+                          : null,
                       child: Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: isShowSendButton
+                              ? appColor.primaryColor
+                              : appColor.canvasColor.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Icon(
-                          Icons.send,
-                          color: Theme.of(context).cardColor,
+                          isShowSendButton
+                              ? Icons.send
+                              : isRecording
+                                  ? Icons.close
+                                  : Icons.mic,
+                          color: appColor.cardColor,
                           size: 20,
                         ),
                       ),
@@ -191,9 +275,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                   return Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: ListTile(
-                      onTap: (){
-
-                      },
+                      onTap: () {},
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
