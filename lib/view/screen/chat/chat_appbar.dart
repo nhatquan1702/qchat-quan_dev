@@ -1,69 +1,92 @@
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/data/model/response/user_model.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
+import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChatDetailPageAppBar extends StatelessWidget
+class ChatDetailPageAppBar extends ConsumerWidget
     implements PreferredSizeWidget {
-  const ChatDetailPageAppBar({Key? key}) : super(key: key);
+  final String uid;
+
+  const ChatDetailPageAppBar({
+    super.key,
+    required this.uid,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appColor = Theme.of(context);
     return AppBar(
       elevation: 0,
       automaticallyImplyLeading: false,
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: appColor.cardColor,
       flexibleSpace: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.only(right: 16),
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              const SizedBox(
-                width: 2,
-              ),
-              const CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://res.cloudinary.com/dmfrvd4tl/image/upload/v1656947957/AI%20QMusic/01fdd3f9a49bc8b528fbf66b13393bf316ba8d97a9_laxhlx.jpg"),
-                maxRadius: 20,
-              ),
-              const SizedBox(
-                width: 12,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Quang",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).canvasColor,
-                      ),
+        child: StreamBuilder<UserModel>(
+          stream: ref.read(authViewModelProvider).getUserDataById(uid),
+          builder: (context, snapshot) {
+            return Container(
+              padding: const EdgeInsets.only(right: 16),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: appColor.primaryColor,
                     ),
-                    const SizedBox(
-                      height: 6,
+                  ),
+                  const SizedBox(
+                    width: 2,
+                  ),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(snapshot.data!.avatarUrl),
+                    maxRadius: 20,
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          snapshot.data!.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).canvasColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        snapshot.data!.isOnline
+                            ? Text(
+                                "Online",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 12,
+                                ),
+                              )
+                            : Text(
+                                "Offline",
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .canvasColor
+                                      .withOpacity(0.5),
+                                  fontSize: 12,
+                                ),
+                              ),
+                      ],
                     ),
-                    Text(
-                      "Online",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
       actions: [
@@ -83,14 +106,6 @@ class ChatDetailPageAppBar extends StatelessWidget
         CustomButtonInAppbar(
           context: context,
           icon: Icons.video_call,
-          function: () {},
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        CustomButtonInAppbar(
-          context: context,
-          icon: Icons.more_vert,
           function: () {},
         ),
         const SizedBox(

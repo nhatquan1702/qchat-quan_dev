@@ -53,6 +53,8 @@ class ConstantStrings {
   static const String notification  = 'Thông báo';
   static const String pleasePickImageAvatar  = 'Vui lòng chọn ảnh đại diện';
   static const String pleasePickImageCover  = 'Vui lòng chọn ảnh bìa';
+  static const String numberDoesNotExist  = 'Người này chưa kết bạn!';
+  static const String contact  = 'Danh bạ máy';
 }
 class ConstantStringsRoute{
   static const String routeToRegisterNumberPhoneScreen = '/register-number_phone-screen';
@@ -64,4 +66,5 @@ class ConstantStringsRoute{
   static const String routeToVerificationScreen = '/verification-screen';
   static const String routeToShowImageScreen = '/show-image-screen';
   static const String routeToShowUserInformationScreen = '/show-user-information-screen';
+  static const String routeToShowSelectContactScreen = '/show-select-contact-screen';
 }

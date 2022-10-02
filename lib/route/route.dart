@@ -7,6 +7,7 @@ import 'package:chat_app/view/screen/home/widget/show_image.dart';
 import 'package:chat_app/view/screen/login/login_screen.dart';
 import 'package:chat_app/view/screen/login/register/register_number_phone_screen.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_screen.dart';
+import 'package:chat_app/view/screen/select_contact/select_contact_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../view/screen/login/register/verification_screen.dart';
@@ -30,8 +31,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const DialScreen(),
       );
     case ConstantStringsRoute.routeToChatDetailScreen:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final uid = arguments['uid'];
+      final isGroupChat = arguments['isGroupChat'];
       return MaterialPageRoute(
-        builder: (context) => const ChatDetailScreen(),
+        builder: (context) => ChatDetailScreen(
+          uid: uid,
+          isGroupChat: isGroupChat,
+        ),
       );
     case ConstantStringsRoute.routeToEditProfileScreen:
       return MaterialPageRoute(
@@ -56,6 +63,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           imgUrl:
               'https://res.cloudinary.com/dmfrvd4tl/image/upload/v1656947957/AI%20QMusic/01fdd3f9a49bc8b528fbf66b13393bf316ba8d97a9_laxhlx.jpg',
         ),
+      );
+    case ConstantStringsRoute.routeToShowSelectContactScreen:
+      return MaterialPageRoute(
+        builder: (context) => const SelectContactsScreen(),
       );
     default:
       return MaterialPageRoute(

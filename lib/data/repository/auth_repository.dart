@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/data/model/response/user_model.dart';
 import 'package:chat_app/data/repository/firebase_stogare_repository.dart';
-import 'package:chat_app/view/component/show_snackbar.dart';
+import 'package:chat_app/view/component/widget/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -150,5 +150,19 @@ class AuthRepository {
       user = UserModel.fromMap(userData.data()!);
     }
     return user;
+  }
+
+  Stream<UserModel> getUserDataById(String userId) {
+    return firestore.collection('users').doc(userId).snapshots().map(
+          (event) => UserModel.fromMap(
+        event.data()!,
+      ),
+    );
+  }
+
+  void setUserState(bool isOnline) async {
+    await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'isOnline': isOnline,
+    });
   }
 }

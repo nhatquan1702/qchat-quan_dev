@@ -51,5 +51,14 @@
     <key>NSCameraUsageDescription</key>
     <string>This app requires access to the camera.</string>
 
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Mic Use</string>
+
+    <key>NSContactsUsageDescription</key>
+    <string>Contact list to chat</string>
+
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Needs to hear recordings</string>
+
 </dict>
 </plist>

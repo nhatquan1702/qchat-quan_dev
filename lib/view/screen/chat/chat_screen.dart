@@ -5,9 +5,17 @@ import 'package:chat_app/view/screen/chat/chat_appbar.dart';
 import 'package:chat_app/view/screen/chat/widget/chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({Key? key}) : super(key: key);
+class ChatDetailScreen extends ConsumerStatefulWidget {
+  final String uid;
+  final bool isGroupChat;
+
+  const ChatDetailScreen({
+    super.key,
+    required this.uid,
+    required this.isGroupChat,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -16,7 +24,7 @@ class ChatDetailScreen extends StatefulWidget {
   }
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -32,6 +40,12 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   void _scrollToEnd() {
@@ -51,7 +65,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ChatDetailPageAppBar(),
+      appBar: ChatDetailPageAppBar(
+        uid: widget.uid,
+      ),
       body: Container(
         color: Theme.of(context).cardColor.withOpacity(0.8),
         child: Stack(
@@ -175,6 +191,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   return Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: ListTile(
+                      onTap: (){
+
+                      },
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),

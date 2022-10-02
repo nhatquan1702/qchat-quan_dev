@@ -5,7 +5,7 @@ import 'package:chat_app/view/component/widget/base_button.dart';
 import 'package:chat_app/view/component/provider/obscure_notifier.dart';
 import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
 import 'package:chat_app/view/component/widget/show_dialog_update_image.dart';
-import 'package:chat_app/view/component/show_snackbar.dart';
+import 'package:chat_app/view/component/widget/show_snackbar.dart';
 import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_top.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/view/component/show_snackbar.dart';
+import 'package:chat_app/view/component/widget/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

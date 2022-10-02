@@ -41,6 +41,6 @@ class FakeData{
     SendMenuItems(text: "GIF", icons: Icons.gif_box_outlined, color: Colors.green),
     SendMenuItems(text: "Photo", icons: Icons.image, color: Colors.amber),
     SendMenuItems(text: "Video", icons: Icons.video_collection, color: Colors.blue),
-    SendMenuItems(text: "Audio", icons: Icons.music_note, color: Colors.orange),
+    SendMenuItems(text: "Voice", icons: Icons.mic, color: Colors.orange),
   ];
 }

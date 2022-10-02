@@ -27,6 +27,19 @@ class _TabStatusState extends State<TabFriend> {
         height: double.infinity,
         fit: BoxFit.cover,
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            ConstantStringsRoute.routeToShowSelectContactScreen,
+          );
+        },
+        child: Icon(
+          Icons.perm_contact_cal_rounded,
+          color: Theme.of(context).cardColor,
+        ),
+      ),
     );
   }
 }

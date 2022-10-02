@@ -62,4 +62,12 @@ class LoginViewModel {
     UserModel? user = await authRepository.getCurrentUserData();
     return user;
   }
+
+  Stream<UserModel> getUserDataById(String userId) {
+    return authRepository.getUserDataById(userId);
+  }
+
+  void setUserState(bool isOnline) {
+    authRepository.setUserState(isOnline);
+  }
 }

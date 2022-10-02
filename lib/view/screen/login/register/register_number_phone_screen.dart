@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/provider/phone_number_notifier.dart';
-import 'package:chat_app/view/component/show_snackbar.dart';
+import 'package:chat_app/view/component/widget/show_snackbar.dart';
 import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
