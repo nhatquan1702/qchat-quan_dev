@@ -55,6 +55,8 @@ class ConstantStrings {
   static const String pleasePickImageCover  = 'Vui lòng chọn ảnh bìa';
   static const String numberDoesNotExist  = 'Người này chưa kết bạn!';
   static const String contact  = 'Danh bạ máy';
+  static const String online  = 'Online';
+  static const String offline  = 'Offline';
 }
 class ConstantStringsRoute{
   static const String routeToRegisterNumberPhoneScreen = '/register-number_phone-screen';

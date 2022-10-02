@@ -41,10 +41,20 @@ class ChatDetailPageAppBar extends ConsumerWidget
                   const SizedBox(
                     width: 2,
                   ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(snapshot.data!.avatarUrl),
-                    maxRadius: 20,
-                  ),
+                  snapshot.data?.avatarUrl == null
+                      ? CircleAvatar(
+                          maxRadius: 20,
+                          backgroundColor: appColor.cardColor,
+                          child: Icon(
+                            Icons.person,
+                            color: appColor.canvasColor,
+                          ),
+                        )
+                      : CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(snapshot.data!.avatarUrl),
+                          maxRadius: 20,
+                        ),
                   const SizedBox(
                     width: 12,
                   ),
@@ -54,29 +64,25 @@ class ChatDetailPageAppBar extends ConsumerWidget
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          snapshot.data!.name,
+                          snapshot.data?.name ?? '',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Theme.of(context).canvasColor,
+                            color: appColor.canvasColor,
                           ),
                         ),
                         const SizedBox(
                           height: 6,
                         ),
-                        snapshot.data!.isOnline
-                            ? Text(
-                                "Online",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 12,
-                                ),
-                              )
+                        snapshot.data?.isOnline == null
+                            ? const Text('')
                             : Text(
-                                "Offline",
+                                snapshot.data!.isOnline
+                                    ? ConstantStrings.online
+                                    : ConstantStrings.offline,
                                 style: TextStyle(
-                                  color: Theme.of(context)
-                                      .canvasColor
-                                      .withOpacity(0.5),
+                                  color: snapshot.data!.isOnline
+                                      ? appColor.primaryColor.withOpacity(1)
+                                      : appColor.canvasColor.withOpacity(0.5),
                                   fontSize: 12,
                                 ),
                               ),
