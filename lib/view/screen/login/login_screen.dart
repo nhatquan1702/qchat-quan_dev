@@ -1,5 +1,7 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/provider/obscure_notifier.dart';
+import 'package:chat_app/view/component/widget/show_snackbar.dart';
+import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,8 +20,20 @@ class _LoginState extends ConsumerState<LoginScreen> {
     ref.read(obscureProvider).updateObscure();
   }
 
+  void sendPhoneNumber(String phoneNumber) {
+    if (phoneNumber.isNotEmpty) {
+      ref.read(authViewModelProvider).signInWithPhone(context, phoneNumber);
+    } else {
+      showSnackBarFailure(
+        context: context,
+        title: ConstantStrings.reload,
+        message: ConstantStrings.notValidNumberPhone,
+      );
+    }
+  }
+
   moveToHome(BuildContext context) async {
-    phoneController.text = '+84 356 329 294';
+    phoneController.text = '+84 338 544 703';
     passController.text = 'Quan@.123';
     if (formKey.currentState!.validate()) {
       if (mounted) {
@@ -27,10 +41,7 @@ class _LoginState extends ConsumerState<LoginScreen> {
       }
       await Future.delayed(const Duration(seconds: 1));
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(
-        context,
-        ConstantStringsRoute.routeToHomeScreen,
-      );
+      sendPhoneNumber(phoneController.text.toString().trim());
       await Future.delayed(const Duration(seconds: 2));
       if (mounted) {
         ref.read(obscureProvider).updateButton(false);

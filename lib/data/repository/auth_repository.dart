@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:chat_app/constant/strings.dart';
@@ -30,7 +31,7 @@ class AuthRepository {
         phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 60),
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await auth.signInWithCredential(credential);
+          //await auth.signInWithCredential(credential);
         },
         verificationFailed: (e) {
           throw Exception(e.message);
