@@ -47,7 +47,9 @@ class _MyMessageCardState extends State<MyMessageCard> {
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
                         widget.date,
-                        style: TextStyle(fontSize: 10, color: appColor.canvasColor.withOpacity(0.5)),
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: appColor.canvasColor.withOpacity(0.5)),
                       ),
                     ),
                   ],
@@ -60,10 +62,14 @@ class _MyMessageCardState extends State<MyMessageCard> {
             ? Positioned(
                 bottom: 0,
                 right: 4,
-                child: Icon(
-                  Icons.circle,
-                  size: 20,
-                  color: appColor.canvasColor.withOpacity(0.5),
+                child: CircleAvatar(
+                  backgroundColor: appColor.canvasColor.withOpacity(0.5),
+                  radius: 9,
+                  child: Icon(
+                    Icons.person,
+                    size: 12,
+                    color: appColor.cardColor,
+                  ),
                 ),
               )
             : const SizedBox(),

@@ -1,4 +1,3 @@
-import 'package:chat_app/constant/strings.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -8,8 +7,10 @@ class ChatUsersListItem extends StatefulWidget {
   String avatarImageUrl;
   String timeSentMessage;
   bool isMessageRead;
+  VoidCallback onTap;
   ChatUsersListItem(
       {Key? key,
+      required this.onTap,
       required this.nameDisplay,
       required this.lastMessage,
       required this.avatarImageUrl,
@@ -25,12 +26,7 @@ class _ChatUsersListItemState extends State<ChatUsersListItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          ConstantStringsRoute.routeToChatDetailScreen,
-        );
-      },
+      onTap: widget.onTap,
       child: Container(
         padding:
             const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),

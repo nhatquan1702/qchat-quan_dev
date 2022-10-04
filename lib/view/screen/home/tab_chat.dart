@@ -17,6 +17,17 @@ class TabChats extends ConsumerStatefulWidget {
 }
 
 class _TabChatsState extends ConsumerState<TabChats> {
+  void goToChatDetailScreen(String uid, bool isGroup) {
+    Navigator.pushNamed(
+      context,
+      ConstantStringsRoute.routeToChatDetailScreen,
+      arguments: {
+        'uid': uid,
+        'isGroupChat': isGroup,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +59,7 @@ class _TabChatsState extends ConsumerState<TabChats> {
             StreamBuilder<List<ChatContact>>(
               stream: ref.watch(chatViewModelProvider).chatContacts(),
               builder: (context, snapshot) {
-                if(snapshot.connectionState == ConnectionState.waiting){
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const LoadingScreen();
                 }
                 return ListView.builder(
@@ -59,10 +70,15 @@ class _TabChatsState extends ConsumerState<TabChats> {
                   itemBuilder: (context, index) {
                     var chatContactItem = snapshot.data![index];
                     return ChatUsersListItem(
+                      onTap: () => goToChatDetailScreen(
+                        chatContactItem.contactId,
+                        true,
+                      ),
                       nameDisplay: chatContactItem.name,
                       lastMessage: chatContactItem.lastMessage,
                       avatarImageUrl: chatContactItem.avatarImageUrl,
-                      timeSentMessage: DateFormat.Hm().format(chatContactItem.timeSent),
+                      timeSentMessage:
+                          DateFormat.Hm().format(chatContactItem.timeSent),
                       isMessageRead: (index == 0 || index == 3) ? true : false,
                     );
                   },
@@ -72,7 +88,7 @@ class _TabChatsState extends ConsumerState<TabChats> {
             StreamBuilder<List<Group>>(
               stream: ref.watch(chatViewModelProvider).chatGroups(),
               builder: (context, snapshot) {
-                if(snapshot.connectionState == ConnectionState.waiting){
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const LoadingScreen();
                 }
                 return ListView.builder(
@@ -83,10 +99,15 @@ class _TabChatsState extends ConsumerState<TabChats> {
                   itemBuilder: (context, index) {
                     var groupChatItem = snapshot.data![index];
                     return ChatUsersListItem(
+                      onTap: () => goToChatDetailScreen(
+                        groupChatItem.groupId,
+                        false,
+                      ),
                       nameDisplay: groupChatItem.name,
                       lastMessage: groupChatItem.lastMessage,
                       avatarImageUrl: groupChatItem.groupPic,
-                      timeSentMessage: DateFormat.Hm().format(groupChatItem.timeSent),
+                      timeSentMessage:
+                          DateFormat.Hm().format(groupChatItem.timeSent),
                       isMessageRead: (index == 0 || index == 3) ? true : false,
                     );
                   },
