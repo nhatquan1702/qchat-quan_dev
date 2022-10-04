@@ -10,18 +10,18 @@ import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final chatControllerProvider = Provider((ref) {
+final chatViewModelProvider = Provider((ref) {
   final chatRepository = ref.watch(chatRepositoryProvider);
-  return ChatController(
+  return ChatViewModel(
     chatRepository: chatRepository,
     ref: ref,
   );
 });
 
-class ChatController {
+class ChatViewModel {
   final ChatRepository chatRepository;
   final ProviderRef ref;
-  ChatController({
+  ChatViewModel({
     required this.chatRepository,
     required this.ref,
   });

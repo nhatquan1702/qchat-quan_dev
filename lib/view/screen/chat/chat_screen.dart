@@ -42,7 +42,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
     bool isRecording,
   ) async {
     if (isShowSendButton) {
-      ref.read(chatControllerProvider).sendTextMessage(
+      ref.read(chatViewModelProvider).sendTextMessage(
             context,
             textEditingController.text.toString().trim(),
             widget.uid,
@@ -74,7 +74,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
     File file,
     MessageEnum messageEnum,
   ) {
-    ref.read(chatControllerProvider).sendFileMessage(
+    ref.read(chatViewModelProvider).sendFileMessage(
           context,
           file,
           widget.uid,

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ChatUsersListItem extends StatefulWidget {
-  String text;
-  String secondaryText;
-  String image;
-  String time;
+  String nameDisplay;
+  String lastMessage;
+  String avatarImageUrl;
+  String timeSentMessage;
   bool isMessageRead;
   ChatUsersListItem(
       {Key? key,
-      required this.text,
-      required this.secondaryText,
-      required this.image,
-      required this.time,
+      required this.nameDisplay,
+      required this.lastMessage,
+      required this.avatarImageUrl,
+      required this.timeSentMessage,
       required this.isMessageRead})
       : super(key: key);
 
@@ -40,7 +40,7 @@ class _ChatUsersListItemState extends State<ChatUsersListItem> {
               child: Row(
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: NetworkImage(widget.image),
+                    backgroundImage: NetworkImage(widget.avatarImageUrl),
                     maxRadius: 30,
                   ),
                   const SizedBox(
@@ -52,12 +52,12 @@ class _ChatUsersListItemState extends State<ChatUsersListItem> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(widget.text),
+                          Text(widget.nameDisplay),
                           const SizedBox(
                             height: 6,
                           ),
                           Text(
-                            widget.secondaryText,
+                            widget.lastMessage,
                             style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context)
@@ -73,7 +73,7 @@ class _ChatUsersListItemState extends State<ChatUsersListItem> {
               ),
             ),
             Text(
-              widget.time,
+              widget.timeSentMessage,
               style: TextStyle(
                 fontSize: 12,
                 color: widget.isMessageRead

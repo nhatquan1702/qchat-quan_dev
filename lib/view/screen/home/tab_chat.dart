@@ -1,17 +1,22 @@
-import 'package:chat_app/constant/fakeData.dart';
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/data/model/response/chat_contact.dart';
+import 'package:chat_app/data/model/response/group.dart';
+import 'package:chat_app/view/component/loader/loading_screen.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
 import 'package:chat_app/view/screen/chat/chat_user_list_item.dart';
+import 'package:chat_app/view/screen/chat/chat_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-class TabChats extends StatefulWidget {
+class TabChats extends ConsumerStatefulWidget {
   const TabChats({Key? key}) : super(key: key);
 
   @override
-  State<TabChats> createState() => _TabChatsState();
+  ConsumerState<TabChats> createState() => _TabChatsState();
 }
 
-class _TabChatsState extends State<TabChats> {
+class _TabChatsState extends ConsumerState<TabChats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,21 +45,54 @@ class _TabChatsState extends State<TabChats> {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            ListView.builder(
-              itemCount: FakeData.chatUsers.length,
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(top: 16),
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ChatUsersListItem(
-                  text: FakeData.chatUsers[index].text,
-                  secondaryText: FakeData.chatUsers[index].secondaryText,
-                  image: FakeData.chatUsers[index].image,
-                  time: FakeData.chatUsers[index].time,
-                  isMessageRead: (index == 0 || index == 3) ? true : false,
+            StreamBuilder<List<ChatContact>>(
+              stream: ref.watch(chatViewModelProvider).chatContacts(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return const LoadingScreen();
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 16),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var chatContactItem = snapshot.data![index];
+                    return ChatUsersListItem(
+                      nameDisplay: chatContactItem.name,
+                      lastMessage: chatContactItem.lastMessage,
+                      avatarImageUrl: chatContactItem.avatarImageUrl,
+                      timeSentMessage: DateFormat.Hm().format(chatContactItem.timeSent),
+                      isMessageRead: (index == 0 || index == 3) ? true : false,
+                    );
+                  },
                 );
               },
             ),
+            StreamBuilder<List<Group>>(
+              stream: ref.watch(chatViewModelProvider).chatGroups(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return const LoadingScreen();
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 16),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var groupChatItem = snapshot.data![index];
+                    return ChatUsersListItem(
+                      nameDisplay: groupChatItem.name,
+                      lastMessage: groupChatItem.lastMessage,
+                      avatarImageUrl: groupChatItem.groupPic,
+                      timeSentMessage: DateFormat.Hm().format(groupChatItem.timeSent),
+                      isMessageRead: (index == 0 || index == 3) ? true : false,
+                    );
+                  },
+                );
+              },
+            )
           ],
         ),
       ),
