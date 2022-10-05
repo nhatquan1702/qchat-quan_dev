@@ -9,6 +9,7 @@ class ObscureNotifier with ChangeNotifier {
   bool _isRecorderInit = false;
   bool _isShowEmojiContainer = false;
   bool _isRecording = false;
+  bool _isTapMessage = false;
 
   bool get isObscure => _isObscure;
   bool get changeButton => _changeButton;
@@ -17,6 +18,7 @@ class ObscureNotifier with ChangeNotifier {
   bool get isRecorderInit => _isRecorderInit;
   bool get isShowEmojiContainer => _isShowEmojiContainer;
   bool get isRecording => _isRecording;
+  bool get isTapMessage => _isTapMessage;
 
   void updateObscure() {
     _isObscure = !_isObscure;
@@ -50,6 +52,11 @@ class ObscureNotifier with ChangeNotifier {
 
   void updateStatusRecording() {
     _isRecording =  !_isRecording;
+    notifyListeners();
+  }
+
+  void updateStatusMessage() {
+    _isTapMessage = !_isTapMessage;
     notifyListeners();
   }
 }

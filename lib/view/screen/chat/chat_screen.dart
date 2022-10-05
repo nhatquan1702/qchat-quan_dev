@@ -140,9 +140,12 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
               controller: scrollController,
               physics: const BouncingScrollPhysics(),
               child: Column(
-                children: const [
-                  ChatList(),
-                  SizedBox(
+                children: [
+                  ChatList(
+                    receiverUserId: widget.uid,
+                    isGroupChat: widget.isGroupChat,
+                  ),
+                  const SizedBox(
                     height: 80,
                   ),
                 ],
