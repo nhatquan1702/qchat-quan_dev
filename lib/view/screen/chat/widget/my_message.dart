@@ -13,6 +13,7 @@ class MyMessageCard extends ConsumerStatefulWidget {
   final String username;
   final MessageEnum repliedMessageType;
   final bool isSeen;
+  final String? avatarUrl;
 
   const MyMessageCard({
     super.key,
@@ -24,6 +25,7 @@ class MyMessageCard extends ConsumerStatefulWidget {
     required this.username,
     required this.repliedMessageType,
     required this.isSeen,
+    required this.avatarUrl,
   });
 
   @override
@@ -46,9 +48,13 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
         children: [
           InkWell(
             onTap: () => updateStatus(),
-            child: Container(
-              padding:
-              const EdgeInsets.only(left: 48, right: 24, top: 5, bottom: 5),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 48,
+                right: 24,
+                top: 5,
+                bottom: 5,
+              ),
               child: Align(
                 alignment: (Alignment.topRight),
                 child: Container(
@@ -66,8 +72,9 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                         child: Text(
                           widget.date,
                           style: TextStyle(
-                              fontSize: 10,
-                              color: appColor.canvasColor.withOpacity(0.5)),
+                            fontSize: 10,
+                            color: appColor.canvasColor.withOpacity(0.5),
+                          ),
                         ),
                       ),
                     ],
@@ -78,18 +85,24 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
           ),
           isTapMess
               ? Positioned(
-            bottom: 0,
-            right: 4,
-            child: CircleAvatar(
-              backgroundColor: appColor.canvasColor.withOpacity(0.5),
-              radius: 9,
-              child: Icon(
-                Icons.person,
-                size: 12,
-                color: appColor.cardColor,
-              ),
-            ),
-          )
+                  bottom: 0,
+                  right: 4,
+                  child: widget.avatarUrl == null
+                      ? CircleAvatar(
+                          backgroundColor:
+                              appColor.canvasColor.withOpacity(0.5),
+                          radius: 9,
+                          child: Icon(
+                            Icons.person,
+                            size: 12,
+                            color: appColor.cardColor,
+                          ),
+                        )
+                      : CircleAvatar(
+                          backgroundImage: NetworkImage(widget.avatarUrl!),
+                          maxRadius: 9,
+                        ),
+                )
               : const SizedBox(),
         ],
       ),

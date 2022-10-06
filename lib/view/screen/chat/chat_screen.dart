@@ -8,6 +8,7 @@ import 'package:chat_app/view/screen/chat/chat_appbar.dart';
 import 'package:chat_app/view/screen/chat/chat_view_model.dart';
 import 'package:chat_app/view/screen/chat/widget/chat_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
@@ -34,7 +35,6 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final ScrollController scrollController = ScrollController();
   final TextEditingController textEditingController = TextEditingController();
   FlutterSoundRecorder? _soundRecorder;
-  FocusNode focusNode = FocusNode();
 
   void sendTextMessage(
     bool isShowSendButton,
@@ -51,6 +51,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       setState(() {
         textEditingController.text = '';
       });
+      _scrollToEnd();
     } else {
       var tempDir = await getTemporaryDirectory();
       var path = '${tempDir.path}/flutter_sound.aac';
@@ -108,17 +109,20 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   }
 
   void _scrollToEnd() {
-    if (!scrollController.hasClients) {
-      return;
-    }
-    var scrollPosition = scrollController.position;
-    if (scrollPosition.maxScrollExtent > scrollPosition.minScrollExtent) {
-      scrollController.animateTo(
-        scrollPosition.maxScrollExtent,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOut,
-      );
-    }
+    // if (!scrollController.hasClients) {
+    //   return;
+    // }
+    // var scrollPosition = scrollController.position;
+    // if (scrollPosition.maxScrollExtent > scrollPosition.minScrollExtent) {
+    //   scrollController.animateTo(
+    //     scrollPosition.maxScrollExtent,
+    //     duration: const Duration(milliseconds: 200),
+    //     curve: Curves.easeOut,
+    //   );
+    // }
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    });
   }
 
   @override
@@ -163,6 +167,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     GestureDetector(
                       onTap: () {
                         showModal();
+                        _scrollToEnd();
                       },
                       child: Container(
                         height: 40,
@@ -206,7 +211,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     GestureDetector(
                       onTap: isShowSendButton
                           ? () {
-                             // _scrollToEnd();
+                              _scrollToEnd();
                               sendTextMessage(
                                 isShowSendButton,
                                 isRecorderInit,

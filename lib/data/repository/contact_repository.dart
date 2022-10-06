@@ -51,7 +51,7 @@ class SelectContactRepository {
             ConstantStringsRoute.routeToChatDetailScreen,
             arguments: {
               'uid': userData.uid,
-              'isGroupChat': true,
+              'isGroupChat': false ,
             },
           );
         }

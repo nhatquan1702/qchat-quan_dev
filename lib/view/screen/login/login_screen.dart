@@ -33,7 +33,7 @@ class _LoginState extends ConsumerState<LoginScreen> {
   }
 
   moveToHome(BuildContext context) async {
-    phoneController.text = '+84 33 85 44 703';
+    //phoneController.text = '+84 33 85 44 703';
     passController.text = 'Quan@.123';
     if (formKey.currentState!.validate()) {
       if (mounted) {

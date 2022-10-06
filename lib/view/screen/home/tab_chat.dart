@@ -72,7 +72,7 @@ class _TabChatsState extends ConsumerState<TabChats> {
                     return ChatUsersListItem(
                       onTap: () => goToChatDetailScreen(
                         chatContactItem.contactId,
-                        true,
+                        false,
                       ),
                       nameDisplay: chatContactItem.name,
                       lastMessage: chatContactItem.lastMessage,
@@ -85,35 +85,35 @@ class _TabChatsState extends ConsumerState<TabChats> {
                 );
               },
             ),
-            StreamBuilder<List<Group>>(
-              stream: ref.watch(chatViewModelProvider).chatGroups(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const LoadingScreen();
-                }
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(top: 16),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    var groupChatItem = snapshot.data![index];
-                    return ChatUsersListItem(
-                      onTap: () => goToChatDetailScreen(
-                        groupChatItem.groupId,
-                        false,
-                      ),
-                      nameDisplay: groupChatItem.name,
-                      lastMessage: groupChatItem.lastMessage,
-                      avatarImageUrl: groupChatItem.groupPic,
-                      timeSentMessage:
-                          DateFormat.Hm().format(groupChatItem.timeSent),
-                      isMessageRead: (index == 0 || index == 3) ? true : false,
-                    );
-                  },
-                );
-              },
-            )
+            // StreamBuilder<List<Group>>(
+            //   stream: ref.watch(chatViewModelProvider).chatGroups(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return const LoadingScreen();
+            //     }
+            //     return ListView.builder(
+            //       itemCount: snapshot.data!.length,
+            //       shrinkWrap: true,
+            //       padding: const EdgeInsets.only(top: 16),
+            //       physics: const NeverScrollableScrollPhysics(),
+            //       itemBuilder: (context, index) {
+            //         var groupChatItem = snapshot.data![index];
+            //         return ChatUsersListItem(
+            //           onTap: () => goToChatDetailScreen(
+            //             groupChatItem.groupId,
+            //             false,
+            //           ),
+            //           nameDisplay: groupChatItem.name,
+            //           lastMessage: groupChatItem.lastMessage,
+            //           avatarImageUrl: groupChatItem.groupPic,
+            //           timeSentMessage:
+            //               DateFormat.Hm().format(groupChatItem.timeSent),
+            //           isMessageRead: (index == 0 || index == 3) ? true : false,
+            //         );
+            //       },
+            //     );
+            //   },
+            // )
           ],
         ),
       ),
