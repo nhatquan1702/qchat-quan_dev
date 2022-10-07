@@ -1,13 +1,15 @@
 import 'dart:math';
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/data/model/response/user_model.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
-import 'package:chat_app/view/component/provider/picker_image_notifier.dart';
 import 'package:chat_app/view/component/provider/scroll_notifier.dart';
 import 'package:chat_app/view/component/widget/show_dialog_update_image.dart';
 import 'package:chat_app/view/screen/home/widget/custom_scrollview.dart';
+import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TabProfile extends ConsumerStatefulWidget {
   const TabProfile({Key? key}) : super(key: key);
@@ -34,42 +36,65 @@ class _TabCallsState extends ConsumerState<TabProfile> {
     super.dispose();
   }
 
+  Future<String?> _getUserId() async {
+    final userInformation = await SharedPreferences.getInstance();
+    String? userId = userInformation.getString(SharedPreferencesKey.userKey);
+    return userId;
+  }
+
   @override
   Widget build(BuildContext context) {
     int position = ref.watch(scrollableProvider).position;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
+
+    final streamUser = ref
+        .read(authViewModelProvider)
+        .getUserDataById(_getUserId().toString());
+
+    final appColor = Theme.of(context);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: appColor.cardColor,
       appBar: position < 50
           ? null
           : AppBar(
               actions: _buildActionsAppBar(),
-              leading: const Padding(
-                padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://res.cloudinary.com/dmfrvd4tl/image/upload/v1656947957/AI%20QMusic/01fdd3f9a49bc8b528fbf66b13393bf316ba8d97a9_laxhlx.jpg"),
-                  maxRadius: 20,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                child: StreamBuilder<UserModel> (
+                  stream: streamUser,
+                  builder: (context, snapshot){
+                    if(snapshot.data!.avatarUrl == ''){
+                      return CircleAvatar(
+                        backgroundImage: NetworkImage(snapshot.data!.avatarUrl),
+                        maxRadius: 20,
+                      )
+                    }
+
+                    else return CircleAvatar(
+                      backgroundImage: NetworkImage(snapshot.data!.avatarUrl),
+                      maxRadius: 20,
+                    );
+                  },
                 ),
               ),
-              backgroundColor: Theme.of(context)
-                  .cardColor
+              backgroundColor: appColor.cardColor
                   .withOpacity(max(0, min(1, position / 280))),
               elevation: 0.2,
-              shadowColor: Theme.of(context).canvasColor,
+              shadowColor: appColor.canvasColor,
               centerTitle: false,
               titleSpacing: 8,
               titleTextStyle: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: appColor.primaryColor,
                 fontSize: 18,
               ),
               title: Text(
-                'Nhật Quang',
+                userCurrent.name,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: appColor.primaryColor,
                 ),
               ),
             ),
@@ -77,7 +102,8 @@ class _TabCallsState extends ConsumerState<TabProfile> {
         controller: _scrollController,
         child: Column(
           children: [
-            _buildBody(context),
+            _buildBody(context, userCurrent.avatarUrl, userCurrent.coverUrl,
+                userCurrent.name),
             //_buildAmount(),
             const SizedBox(
               height: 10,
@@ -89,16 +115,16 @@ class _TabCallsState extends ConsumerState<TabProfile> {
                 ),
                 elevation: MaterialStateProperty.all<double>(0.0),
                 foregroundColor: MaterialStateProperty.all<Color>(
-                  Theme.of(context).cardColor,
+                  appColor.cardColor,
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Theme.of(context).primaryColor,
+                  appColor.primaryColor,
                 ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                     side: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                      color: appColor.primaryColor,
                     ),
                   ),
                 ),
@@ -124,20 +150,20 @@ class _TabCallsState extends ConsumerState<TabProfile> {
     );
   }
 
-  Widget _buildAvatarImg(BuildContext context) {
-    final imagePickedAvatar = ref.watch(pickerImageProvider).fileAvatar;
+  Widget _buildAvatarImg(BuildContext context, String urlAvatar) {
+    //final imagePickedAvatar = ref.watch(pickerImageProvider).fileAvatar;
     final appColor = Theme.of(context);
 
     return InkWell(
       onTap: () {
-        showChoiceImageDialog(
-          context,
-          ConstantStrings.avatar,
-          ref,
-          ConstantStrings.seeAvatar,
-          true,
-          imagePickedAvatar == null ? true : false,
-        );
+        // showChoiceImageDialog(
+        //   context,
+        //   ConstantStrings.avatar,
+        //   ref,
+        //   ConstantStrings.seeAvatar,
+        //   true,
+        //   imagePickedAvatar == null ? true : false,
+        // );
       },
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(144 / 2),
@@ -148,13 +174,13 @@ class _TabCallsState extends ConsumerState<TabProfile> {
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(144 / 2)),
           border: Border.all(
-            color: Theme.of(context).cardColor,
+            color: appColor.cardColor,
             width: 5.0,
           ),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(144 / 2),
-          child: imagePickedAvatar == null
+          child: urlAvatar == ''
               ? Container(
                   color: appColor.canvasColor.withOpacity(0.1),
                   child: Icon(
@@ -162,8 +188,8 @@ class _TabCallsState extends ConsumerState<TabProfile> {
                     color: appColor.canvasColor,
                   ),
                 )
-              : Image.file(
-                  imagePickedAvatar,
+              : Image.network(
+                  urlAvatar,
                   fit: BoxFit.cover,
                 ),
         ),
@@ -189,9 +215,11 @@ class _TabCallsState extends ConsumerState<TabProfile> {
     ];
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(
+      BuildContext context, String avatarUrl, String coverUrl, String name) {
     double offset = ref.watch(scrollableProvider).offset;
-    final imagePickedCover = ref.watch(pickerImageProvider).fileCover;
+    //final imagePickedCover = ref.watch(pickerImageProvider).fileCover;
+    final appColor = Theme.of(context);
 
     return Column(
       children: [
@@ -210,26 +238,26 @@ class _TabCallsState extends ConsumerState<TabProfile> {
                   ref,
                   ConstantStrings.seeCover,
                   false,
-                  imagePickedCover == null ? true : false,
+                  coverUrl == '' ? true : false,
                 ),
-                file: imagePickedCover,
+                urlImg: coverUrl,
               ),
             ),
             const SizedBox(
               height: 50,
             ),
-            _buildAvatarImg(context)
+            _buildAvatarImg(context, avatarUrl),
           ],
         ),
         const SizedBox(
           height: 8,
         ),
         Text(
-          'Nhật Quang',
+          name,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
-            color: Theme.of(context).canvasColor,
+            color: appColor.canvasColor,
           ),
         ),
         const SizedBox(
@@ -239,7 +267,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
           'Graphic Designer',
           style: TextStyle(
             fontSize: 16,
-            color: Theme.of(context).canvasColor.withOpacity(0.8),
+            color: appColor.canvasColor.withOpacity(0.8),
           ),
         ),
         const SizedBox(
@@ -256,7 +284,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
                   '"Trăng vẫn trôi, vẫn sáng. Người phủ phàng dẫn lối"',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Theme.of(context).canvasColor.withOpacity(0.7),
+                    color: appColor.canvasColor.withOpacity(0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),

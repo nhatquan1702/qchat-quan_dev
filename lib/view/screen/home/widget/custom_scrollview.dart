@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class CustomScrollviewAppBar extends StatelessWidget {
   final double offset;
   final VoidCallback onTap;
-  final File? file;
+  final String urlImg;
 
   const CustomScrollviewAppBar({
     super.key,
     required this.offset,
     required this.onTap,
-    this.file,
+    required this.urlImg,
   });
 
   @override
@@ -30,25 +30,26 @@ class CustomScrollviewAppBar extends StatelessWidget {
         1.0 - min(1, shrinkOffset / (maxExtent - minExtent));
 
     return InkWell(
-        onTap: onTap,
-        child: file == null
-            ? Container(
-                width: MediaQuery.of(context).size.width,
-                height: minExtent + (maxExtent - minExtent) * expendPercentage,
-                color: appColor.canvasColor.withOpacity(0.1),
-                child: Icon(
-                  Icons.add_a_photo_outlined,
-                  color: appColor.canvasColor,
+      onTap: onTap,
+      child: urlImg == ''
+          ? Container(
+              width: MediaQuery.of(context).size.width,
+              height: minExtent + (maxExtent - minExtent) * expendPercentage,
+              color: appColor.canvasColor.withOpacity(0.1),
+              child: Icon(
+                Icons.add_a_photo_outlined,
+                color: appColor.canvasColor,
+              ),
+            )
+          : Container(
+              height: minExtent + (maxExtent - minExtent) * expendPercentage,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(urlImg),
+                  fit: BoxFit.cover,
                 ),
-              )
-            : Container(
-                height: minExtent + (maxExtent - minExtent) * expendPercentage,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: FileImage(file!),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ));
+              ),
+            ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/constant/theme.dart';
+import 'package:chat_app/data/model/response/user_model.dart';
 import 'package:chat_app/route/route.dart';
 import 'package:chat_app/view/component/error/error_screen.dart';
 import 'package:chat_app/view/component/loader/loading_screen.dart';
@@ -8,6 +9,7 @@ import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'view/screen/welcome/welcome_screen.dart';
 
@@ -21,6 +23,11 @@ void main() async {
       child: MyApp(),
     ),
   );
+}
+
+void _getInformationUser(String userId) async {
+  final userInformation = await SharedPreferences.getInstance();
+  await userInformation.setString(SharedPreferencesKey.userKey, userId);
 }
 
 class MyApp extends ConsumerWidget {
@@ -37,6 +44,7 @@ class MyApp extends ConsumerWidget {
               if (user == null) {
                 return const WelcomeScreen();
               } else {
+                _getInformationUser(user.uid);
                 return const HomeScreen();
               }
             },

@@ -72,5 +72,5 @@ class ConstantStringsRoute{
 }
 
 class SharedPreferencesKey{
-
+  static const String userKey = 'userInformationKey';
 }
