@@ -24,7 +24,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case ConstantStringsRoute.routeToHomeScreen:
       return MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => HomeScreen(),
       );
     case ConstantStringsRoute.routeToDialScreen:
       return MaterialPageRoute(

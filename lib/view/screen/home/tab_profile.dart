@@ -1,15 +1,16 @@
 import 'dart:math';
+
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/data/model/response/user_model.dart';
+import 'package:chat_app/view/component/enum/share_pref_enum.dart';
+import 'package:chat_app/view/component/setup/shared_pref.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
 import 'package:chat_app/view/component/provider/scroll_notifier.dart';
-import 'package:chat_app/view/component/widget/show_dialog_update_image.dart';
 import 'package:chat_app/view/screen/home/widget/custom_scrollview.dart';
 import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TabProfile extends ConsumerStatefulWidget {
   const TabProfile({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
   late ScrollController _scrollController;
 
   @override
-  void initState() {
+  void initState(){
     _scrollController = ScrollController();
     _scrollController.addListener(() {
       ref.read(scrollableProvider).scrollable(_scrollController);
@@ -36,117 +37,123 @@ class _TabCallsState extends ConsumerState<TabProfile> {
     super.dispose();
   }
 
-  Future<String?> _getUserId() async {
-    final userInformation = await SharedPreferences.getInstance();
-    String? userId = userInformation.getString(SharedPreferencesKey.userKey);
-    return userId;
-  }
-
   @override
   Widget build(BuildContext context) {
     int position = ref.watch(scrollableProvider).position;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
-
-    final streamUser = ref
-        .read(authViewModelProvider)
-        .getUserDataById(_getUserId().toString());
-
     final appColor = Theme.of(context);
+    final uId = SharedPref.getValue(SharedPreferencesKey.userId);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: appColor.cardColor,
-      appBar: position < 50
-          ? null
-          : AppBar(
-              actions: _buildActionsAppBar(),
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
-                child: StreamBuilder<UserModel> (
-                  stream: streamUser,
-                  builder: (context, snapshot){
-                    if(snapshot.data!.avatarUrl == ''){
-                      return CircleAvatar(
-                        backgroundImage: NetworkImage(snapshot.data!.avatarUrl),
-                        maxRadius: 20,
-                      )
-                    }
-
-                    else return CircleAvatar(
-                      backgroundImage: NetworkImage(snapshot.data!.avatarUrl),
-                      maxRadius: 20,
-                    );
-                  },
-                ),
-              ),
-              backgroundColor: appColor.cardColor
-                  .withOpacity(max(0, min(1, position / 280))),
-              elevation: 0.2,
-              shadowColor: appColor.canvasColor,
-              centerTitle: false,
-              titleSpacing: 8,
-              titleTextStyle: TextStyle(
-                color: appColor.primaryColor,
-                fontSize: 18,
-              ),
-              title: Text(
-                userCurrent.name,
-                style: TextStyle(
-                  color: appColor.primaryColor,
-                ),
-              ),
-            ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            _buildBody(context, userCurrent.avatarUrl, userCurrent.coverUrl,
-                userCurrent.name),
-            //_buildAmount(),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all<Size>(
-                  Size(MediaQuery.of(context).size.width - 48, 32),
-                ),
-                elevation: MaterialStateProperty.all<double>(0.0),
-                foregroundColor: MaterialStateProperty.all<Color>(
-                  appColor.cardColor,
-                ),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  appColor.primaryColor,
-                ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(
+    return StreamBuilder<UserModel>(
+      stream: ref.watch(authViewModelProvider).getUserDataById(uId),
+      builder: (context, snapshot) {
+        if (snapshot.data == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        var userInformation = snapshot.data!;
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          backgroundColor: appColor.cardColor,
+          appBar: position < 50
+              ? null
+              : AppBar(
+                  actions: _buildActionsAppBar(),
+                  leading: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                    child: userInformation.avatarUrl == ''
+                        ? CircleAvatar(
+                            backgroundColor:
+                                appColor.canvasColor.withOpacity(0.5),
+                            maxRadius: 20,
+                            child: Icon(
+                              Icons.person,
+                              color: appColor.cardColor,
+                              size: 16,
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(userInformation.avatarUrl),
+                            maxRadius: 20,
+                          ),
+                  ),
+                  backgroundColor: appColor.cardColor
+                      .withOpacity(max(0, min(1, position / 280))),
+                  elevation: 0.2,
+                  shadowColor: appColor.canvasColor,
+                  centerTitle: false,
+                  titleSpacing: 8,
+                  titleTextStyle: TextStyle(
+                    color: appColor.primaryColor,
+                    fontSize: 18,
+                  ),
+                  title: Text(
+                    userInformation.name == '' ? '' : userInformation.name,
+                    style: TextStyle(
                       color: appColor.primaryColor,
                     ),
                   ),
                 ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                _buildBody(
                   context,
-                  ConstantStringsRoute.routeToEditProfileScreen,
-                );
-              },
-              child: Text(
-                ConstantStrings.editProfile.toUpperCase(),
-                style: const TextStyle(fontSize: 14),
-              ),
+                  userInformation.avatarUrl,
+                  userInformation.coverUrl,
+                  userInformation.name,
+                ),
+                //_buildAmount(),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                      Size(MediaQuery.of(context).size.width - 48, 32),
+                    ),
+                    elevation: MaterialStateProperty.all<double>(0.0),
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                      appColor.cardColor,
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      appColor.primaryColor,
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                          color: appColor.primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      ConstantStringsRoute.routeToEditProfileScreen,
+                    );
+                  },
+                  child: Text(
+                    ConstantStrings.editProfile.toUpperCase(),
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
+                // _buildListPhoto(context),
+                Container(
+                  height: 1000,
+                )
+              ],
             ),
-            // _buildListPhoto(context),
-            Container(
-              height: 1000,
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -232,14 +239,15 @@ class _TabCallsState extends ConsumerState<TabProfile> {
               child: CustomScrollviewAppBar(
                 //ảnh bìa
                 offset: offset,
-                onTap: () => showChoiceImageDialog(
-                  context,
-                  ConstantStrings.cover,
-                  ref,
-                  ConstantStrings.seeCover,
-                  false,
-                  coverUrl == '' ? true : false,
-                ),
+                onTap: (){},
+                // onTap: () => showChoiceImageDialog(
+                //   context,
+                //   ConstantStrings.cover,
+                //   ref,
+                //   ConstantStrings.seeCover,
+                //   false,
+                //   coverUrl == '' ? true : false,
+                // ),
                 urlImg: coverUrl,
               ),
             ),

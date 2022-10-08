@@ -55,10 +55,7 @@ class _ChatListState extends ConsumerState<ChatList> {
               .groupChatStream(widget.receiverUserId)
           : ref.read(chatViewModelProvider).chatStream(widget.receiverUserId),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox();
-        }
-        else if(snapshot.data!.isEmpty){
+        if(snapshot.data == null){
           return const SizedBox();
         }
         else{

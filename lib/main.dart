@@ -1,20 +1,21 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/constant/theme.dart';
-import 'package:chat_app/data/model/response/user_model.dart';
 import 'package:chat_app/route/route.dart';
+import 'package:chat_app/view/component/enum/share_pref_enum.dart';
 import 'package:chat_app/view/component/error/error_screen.dart';
 import 'package:chat_app/view/component/loader/loading_screen.dart';
+import 'package:chat_app/view/component/setup/shared_pref.dart';
 import 'package:chat_app/view/screen/home/home_screen.dart';
 import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'view/screen/welcome/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPref.initSharedPref();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -26,8 +27,7 @@ void main() async {
 }
 
 void _getInformationUser(String userId) async {
-  final userInformation = await SharedPreferences.getInstance();
-  await userInformation.setString(SharedPreferencesKey.userKey, userId);
+  SharedPref.setValue<String>(SharedPreferencesKey.userId, userId);
 }
 
 class MyApp extends ConsumerWidget {

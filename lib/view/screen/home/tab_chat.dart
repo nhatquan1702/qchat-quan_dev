@@ -1,7 +1,5 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/data/model/response/chat_contact.dart';
-import 'package:chat_app/data/model/response/group.dart';
-import 'package:chat_app/view/component/loader/loading_screen.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
 import 'package:chat_app/view/screen/chat/chat_user_list_item.dart';
 import 'package:chat_app/view/screen/chat/chat_view_model.dart';
@@ -30,28 +28,30 @@ class _TabChatsState extends ConsumerState<TabChats> {
 
   @override
   Widget build(BuildContext context) {
+    final appColor = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: _buildActionsAppBar(),
-        backgroundColor: Theme.of(context).cardColor,
+        backgroundColor: appColor.cardColor,
         elevation: 0.2,
-        shadowColor: Theme.of(context).canvasColor,
+        shadowColor: appColor.canvasColor,
         centerTitle: false,
         titleSpacing: 16,
         titleTextStyle: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: appColor.primaryColor,
           fontSize: 24,
           fontWeight: FontWeight.w400,
         ),
         title: Text(
           ConstantStrings.appName,
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
+            color: appColor.primaryColor,
           ),
         ),
       ),
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: appColor.cardColor,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -60,7 +60,7 @@ class _TabChatsState extends ConsumerState<TabChats> {
               stream: ref.watch(chatViewModelProvider).chatContacts(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const LoadingScreen();
+                  return const SizedBox();
                 }
                 return ListView.builder(
                   itemCount: snapshot.data!.length,

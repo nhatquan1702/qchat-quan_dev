@@ -70,7 +70,3 @@ class ConstantStringsRoute{
   static const String routeToShowUserInformationScreen = '/show-user-information-screen';
   static const String routeToShowSelectContactScreen = '/show-select-contact-screen';
 }
-
-class SharedPreferencesKey{
-  static const String userKey = 'userInformationKey';
-}

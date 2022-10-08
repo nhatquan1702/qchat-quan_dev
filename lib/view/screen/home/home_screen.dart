@@ -14,10 +14,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  static const List<Widget> _widgetOptions = <Widget>[
-    TabChats(),
-    TabFriend(),
-    TabProfile(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const TabChats(),
+    const TabFriend(),
+    const TabProfile(),
   ];
   @override
   Widget build(BuildContext context) {
