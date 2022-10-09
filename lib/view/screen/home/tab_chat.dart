@@ -15,13 +15,20 @@ class TabChats extends ConsumerStatefulWidget {
 }
 
 class _TabChatsState extends ConsumerState<TabChats> {
-  void goToChatDetailScreen(String uid, bool isGroup) {
+  void goToChatDetailScreen(
+    String uid,
+    bool isGroup,
+    String avatarUrl,
+    String name,
+  ) {
     Navigator.pushNamed(
       context,
       ConstantStringsRoute.routeToChatDetailScreen,
       arguments: {
         'uid': uid,
         'isGroupChat': isGroup,
+        'avatarUrl': avatarUrl,
+        'name': name,
       },
     );
   }
@@ -39,13 +46,8 @@ class _TabChatsState extends ConsumerState<TabChats> {
         shadowColor: appColor.canvasColor,
         centerTitle: false,
         titleSpacing: 16,
-        titleTextStyle: TextStyle(
-          color: appColor.primaryColor,
-          fontSize: 24,
-          fontWeight: FontWeight.w400,
-        ),
         title: Text(
-          ConstantStrings.appName,
+          ConstantStrings.chat,
           style: TextStyle(
             color: appColor.primaryColor,
           ),
@@ -73,6 +75,8 @@ class _TabChatsState extends ConsumerState<TabChats> {
                       onTap: () => goToChatDetailScreen(
                         chatContactItem.contactId,
                         false,
+                        chatContactItem.avatarImageUrl,
+                        chatContactItem.name,
                       ),
                       nameDisplay: chatContactItem.name,
                       lastMessage: chatContactItem.lastMessage,
@@ -88,7 +92,7 @@ class _TabChatsState extends ConsumerState<TabChats> {
             // StreamBuilder<List<Group>>(
             //   stream: ref.watch(chatViewModelProvider).chatGroups(),
             //   builder: (context, snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //     if (snapshot.data == null) {
             //       return const LoadingScreen();
             //     }
             //     return ListView.builder(
@@ -101,7 +105,9 @@ class _TabChatsState extends ConsumerState<TabChats> {
             //         return ChatUsersListItem(
             //           onTap: () => goToChatDetailScreen(
             //             groupChatItem.groupId,
-            //             false,
+            //             true,
+            //             groupChatItem.groupPic,
+            //             groupChatItem.name,
             //           ),
             //           nameDisplay: groupChatItem.name,
             //           lastMessage: groupChatItem.lastMessage,

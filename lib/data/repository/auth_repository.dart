@@ -1,8 +1,11 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/data/model/response/user_model.dart';
 import 'package:chat_app/data/repository/firebase_stogare_repository.dart';
+import 'package:chat_app/view/component/enum/share_pref_enum.dart';
+import 'package:chat_app/view/component/setup/shared_pref.dart';
 import 'package:chat_app/view/component/widget/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +29,9 @@ class AuthRepository {
 
   void signInWithPhone(BuildContext context, String phoneNumber) async {
     try {
+      //kiểm tra nếu th user hiện tại đã có sdt trong list user
+      // thì cho login rồi chuyển qua home,
+      // nếu chưa có sdt thì qua màn cập nhật thông tin user
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 60),
@@ -68,12 +74,25 @@ class AuthRepository {
         smsCode: userOTP,
       );
       await auth.signInWithCredential(credential);
-      // ignore: use_build_context_synchronously
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        ConstantStringsRoute.routeToHomeScreen,
-        (route) => false,
-      );
+      if(auth.currentUser?.uid != null){
+        SharedPref.setValue<String>(
+            SharedPreferencesKey.userId, auth.currentUser!.uid);
+        log('quan: ${auth.currentUser!.uid}');
+        // ignore: use_build_context_synchronously
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          ConstantStringsRoute.routeToHomeScreen,
+              (route) => false,
+        );
+      }
+      else{
+        showSnackBarFailure(
+          context: context,
+          title: ConstantStrings.error,
+          message: ConstantStrings.reload,
+        );
+      }
+
     } on FirebaseAuthException catch (e) {
       showSnackBarFailure(
         context: context,
@@ -143,7 +162,7 @@ class AuthRepository {
 
   Future<UserModel?> getCurrentUserData() async {
     var userData =
-    await firestore.collection('users').doc(auth.currentUser?.uid).get();
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
 
     UserModel? user;
     if (userData.data() != null) {
@@ -155,9 +174,9 @@ class AuthRepository {
   Stream<UserModel> getUserDataById(String userId) {
     return firestore.collection('users').doc(userId).snapshots().map(
           (event) => UserModel.fromMap(
-        event.data()!,
-      ),
-    );
+            event.data()!,
+          ),
+        );
   }
 
   void setUserState(bool isOnline) async {

@@ -1,5 +1,5 @@
 class ConstantStrings {
-  static const String appName = 'QChat';
+  static const String appName = 'Chat';
   static const String numberPhone = 'Số điện thoại';
   static const String login = 'Đăng nhập';
   static const String search = 'Tìm kiếm';

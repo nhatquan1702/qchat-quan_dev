@@ -6,6 +6,7 @@ import 'package:chat_app/view/screen/home/home_screen.dart';
 import 'package:chat_app/view/screen/home/widget/show_image.dart';
 import 'package:chat_app/view/screen/login/login_screen.dart';
 import 'package:chat_app/view/screen/login/register/register_number_phone_screen.dart';
+import 'package:chat_app/view/screen/login/register/user_information_screen.dart';
 import 'package:chat_app/view/screen/profile/edit_profile_screen.dart';
 import 'package:chat_app/view/screen/select_contact/select_contact_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case ConstantStringsRoute.routeToHomeScreen:
       return MaterialPageRoute(
-        builder: (context) => HomeScreen(),
+        builder: (context) => const HomeScreen(),
       );
     case ConstantStringsRoute.routeToDialScreen:
       return MaterialPageRoute(
@@ -34,10 +35,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final arguments = settings.arguments as Map<String, dynamic>;
       final uid = arguments['uid'];
       final isGroupChat = arguments['isGroupChat'];
+      final avatarUrl = arguments['avatarUrl'];
+      final name = arguments['name'];
       return MaterialPageRoute(
         builder: (context) => ChatDetailScreen(
           uid: uid,
           isGroupChat: isGroupChat,
+          avatarUrl: avatarUrl,
+          name: name,
         ),
       );
     case ConstantStringsRoute.routeToEditProfileScreen:
@@ -67,6 +72,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ConstantStringsRoute.routeToShowSelectContactScreen:
       return MaterialPageRoute(
         builder: (context) => const SelectContactsScreen(),
+      );
+    case ConstantStringsRoute.routeToShowUserInformationScreen:
+      return MaterialPageRoute(
+        builder: (context) => const UserInformationScreen(),
       );
     default:
       return MaterialPageRoute(

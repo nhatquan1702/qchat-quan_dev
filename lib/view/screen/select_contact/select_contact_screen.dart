@@ -29,7 +29,7 @@ class SelectContactsScreen extends ConsumerWidget {
         backgroundColor: appColor.cardColor,
         title: Text(
           ConstantStrings.contact,
-          style: TextStyle(color: Theme.of(context).primaryColor),
+          style: TextStyle(color: appColor.primaryColor),
         ),
         centerTitle: false,
         leading: IconButton(
@@ -38,7 +38,7 @@ class SelectContactsScreen extends ConsumerWidget {
           },
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).primaryColor,
+            color: appColor.primaryColor,
           ),
         ),
         actions: _buildActionsAppBar(context),

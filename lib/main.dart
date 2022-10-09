@@ -1,7 +1,6 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/constant/theme.dart';
 import 'package:chat_app/route/route.dart';
-import 'package:chat_app/view/component/enum/share_pref_enum.dart';
 import 'package:chat_app/view/component/error/error_screen.dart';
 import 'package:chat_app/view/component/loader/loading_screen.dart';
 import 'package:chat_app/view/component/setup/shared_pref.dart';
@@ -26,10 +25,6 @@ void main() async {
   );
 }
 
-void _getInformationUser(String userId) async {
-  SharedPref.setValue<String>(SharedPreferencesKey.userId, userId);
-}
-
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -44,7 +39,6 @@ class MyApp extends ConsumerWidget {
               if (user == null) {
                 return const WelcomeScreen();
               } else {
-                _getInformationUser(user.uid);
                 return const HomeScreen();
               }
             },

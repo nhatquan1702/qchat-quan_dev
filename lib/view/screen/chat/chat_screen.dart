@@ -17,11 +17,15 @@ import 'package:path_provider/path_provider.dart';
 class ChatDetailScreen extends ConsumerStatefulWidget {
   final String uid;
   final bool isGroupChat;
+  final String avatarUrl;
+  final String name;
 
   const ChatDetailScreen({
     super.key,
     required this.uid,
     required this.isGroupChat,
+    required this.avatarUrl,
+    required this.name,
   });
 
   @override
@@ -109,9 +113,9 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   }
 
   void _scrollToEnd() {
-    // if (!scrollController.hasClients) {
-    //   return;
-    // }
+    if (!scrollController.hasClients) {
+      return;
+    }
     // var scrollPosition = scrollController.position;
     // if (scrollPosition.maxScrollExtent > scrollPosition.minScrollExtent) {
     //   scrollController.animateTo(
@@ -148,6 +152,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                   ChatList(
                     receiverUserId: widget.uid,
                     isGroupChat: widget.isGroupChat,
+                    avatarUrl: widget.avatarUrl,
                   ),
                   const SizedBox(
                     height: 80,

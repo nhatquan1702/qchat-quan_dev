@@ -45,6 +45,7 @@ class _TabCallsState extends ConsumerState<TabProfile> {
     );
     final appColor = Theme.of(context);
     final uId = SharedPref.getValue(SharedPreferencesKey.userId);
+    print('quan: $uId');
 
     return StreamBuilder<UserModel>(
       stream: ref.watch(authViewModelProvider).getUserDataById(uId),

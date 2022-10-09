@@ -12,11 +12,13 @@ import 'package:intl/intl.dart';
 class ChatList extends ConsumerStatefulWidget {
   final String receiverUserId;
   final bool isGroupChat;
+  final String avatarUrl;
 
   const ChatList({
     super.key,
     required this.receiverUserId,
     required this.isGroupChat,
+    required this.avatarUrl,
   });
 
   @override
@@ -93,7 +95,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                     messageData.type,
                   ),
                   isSeen: messageData.isSeen,
-                  avatarUrl: null,
+                  avatarUrl: widget.avatarUrl,
                 );
               }
               return SendMessageCard(
@@ -108,7 +110,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                   messageData.type,
                 ),
                 repliedText: messageData.repliedMessage,
-                avatarUrl: null,
+                avatarUrl: widget.avatarUrl,
               );
             },
           );
