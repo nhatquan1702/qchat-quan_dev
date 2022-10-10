@@ -55,7 +55,9 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       setState(() {
         textEditingController.text = '';
       });
-      _scrollToEnd();
+      Timer(const Duration(milliseconds: 200), () {
+        _scrollToEnd();
+      });
     } else {
       var tempDir = await getTemporaryDirectory();
       var path = '${tempDir.path}/flutter_sound.aac';
@@ -155,7 +157,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     avatarUrl: widget.avatarUrl,
                   ),
                   const SizedBox(
-                    height: 80,
+                    height: 100,
                   ),
                 ],
               ),
