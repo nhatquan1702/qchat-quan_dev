@@ -27,19 +27,22 @@ class LoginViewModel {
   void signInWithPhone(
     BuildContext context,
     String phoneNumber,
+    bool isLogin,
   ) {
-    authRepository.signInWithPhone(context, phoneNumber);
+    authRepository.signInWithPhone(context, phoneNumber, isLogin);
   }
 
   void verifyOTP(
     BuildContext context,
     String verificationId,
     String userOTP,
+    bool isLogin,
   ) {
     authRepository.verifyOTP(
       context: context,
       verificationId: verificationId,
       userOTP: userOTP,
+      isLogin: isLogin,
     );
   }
 

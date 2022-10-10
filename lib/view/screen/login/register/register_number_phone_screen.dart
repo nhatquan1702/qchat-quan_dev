@@ -23,7 +23,7 @@ class _RegisterWithPhoneNumberState
 
   void sendPhoneNumber(String phoneNumber) {
     if (phoneNumber.isNotEmpty) {
-      ref.read(authViewModelProvider).signInWithPhone(context, phoneNumber);
+      ref.read(authViewModelProvider).signInWithPhone(context, phoneNumber, false);
     } else {
       showSnackBarFailure(
         context: context,
@@ -190,15 +190,6 @@ class _RegisterWithPhoneNumberState
                         final String tmp =
                             phoneNumber.phoneNumber.toString().trim();
                         sendPhoneNumber(tmp);
-                        Navigator.pushNamed(
-                          context,
-                          ConstantStringsRoute.routeToVerificationScreen,
-                          arguments: {
-                            'phoneNumber': tmp,
-                            'verificationId': 'verificationId',
-                            'resendToken': 'resendToken',
-                          },
-                        );
                       }
                     },
                     color: appColor.primaryColor,

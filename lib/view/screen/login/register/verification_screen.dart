@@ -11,11 +11,14 @@ class VerificationScreen extends ConsumerStatefulWidget {
   final String phoneNumber;
   final String verificationId;
   final String resendToken;
-  const VerificationScreen(
-      {super.key,
-      required this.verificationId,
-      required this.phoneNumber,
-      required this.resendToken});
+  final bool isLogin;
+  const VerificationScreen({
+    super.key,
+    required this.verificationId,
+    required this.phoneNumber,
+    required this.resendToken,
+    required this.isLogin,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -30,6 +33,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
           context,
           widget.verificationId,
           userOTP,
+          widget.isLogin,
         );
   }
 

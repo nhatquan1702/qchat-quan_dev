@@ -22,7 +22,7 @@ class _LoginState extends ConsumerState<LoginScreen> {
 
   void sendPhoneNumber(String phoneNumber) {
     if (phoneNumber.isNotEmpty) {
-      ref.read(authViewModelProvider).signInWithPhone(context, phoneNumber);
+      ref.read(authViewModelProvider).signInWithPhone(context, phoneNumber, true);
     } else {
       showSnackBarFailure(
         context: context,

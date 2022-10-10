@@ -27,7 +27,8 @@ class AuthRepository {
     required this.firestore,
   });
 
-  void signInWithPhone(BuildContext context, String phoneNumber) async {
+  void signInWithPhone(
+      BuildContext context, String phoneNumber, bool isLogin) async {
     try {
       //kiểm tra nếu th user hiện tại đã có sdt trong list user
       // thì cho login rồi chuyển qua home,
@@ -49,6 +50,7 @@ class AuthRepository {
               'phoneNumber': phoneNumber,
               'verificationId': verificationId,
               'resendToken': resendToken,
+              'isLogin': isLogin,
             },
           );
         }),
@@ -67,6 +69,7 @@ class AuthRepository {
     required BuildContext context,
     required String verificationId,
     required String userOTP,
+    required bool isLogin,
   }) async {
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
@@ -74,25 +77,32 @@ class AuthRepository {
         smsCode: userOTP,
       );
       await auth.signInWithCredential(credential);
-      if(auth.currentUser?.uid != null){
+      if (auth.currentUser?.uid != null) {
         SharedPref.setValue<String>(
             SharedPreferencesKey.userId, auth.currentUser!.uid);
         log('quan: ${auth.currentUser!.uid}');
-        // ignore: use_build_context_synchronously
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          ConstantStringsRoute.routeToHomeScreen,
-              (route) => false,
-        );
-      }
-      else{
+        if (isLogin) {
+          // ignore: use_build_context_synchronously
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            ConstantStringsRoute.routeToHomeScreen,
+            (route) => false,
+          );
+        } else {
+          // ignore: use_build_context_synchronously
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            ConstantStringsRoute.routeToShowUserInformationScreen,
+            (route) => false,
+          );
+        }
+      } else {
         showSnackBarFailure(
           context: context,
           title: ConstantStrings.error,
           message: ConstantStrings.reload,
         );
       }
-
     } on FirebaseAuthException catch (e) {
       showSnackBarFailure(
         context: context,

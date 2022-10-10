@@ -54,11 +54,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final phoneNumber = arguments['phoneNumber'];
       final verificationId = arguments['verificationId'];
       final resendToken = arguments['resendToken'];
+      final bool isLogin = arguments['isLogin'];
       return MaterialPageRoute(
         builder: (context) => VerificationScreen(
           verificationId: verificationId.toString(),
           phoneNumber: phoneNumber.toString(),
           resendToken: resendToken.toString(),
+          isLogin: isLogin,
         ),
       );
     case ConstantStringsRoute.routeToShowImageScreen:

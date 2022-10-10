@@ -53,7 +53,7 @@ class ChatViewModel {
           (value) => chatRepository.sendTextMessage(
         context: context,
         text: text,
-        recieverUserId: recieverUserId,
+        receiverUserId: recieverUserId,
         senderUser: value!,
         messageReply: messageReply,
         isGroupChat: isGroupChat,
@@ -74,7 +74,7 @@ class ChatViewModel {
           (value) => chatRepository.sendFileMessage(
         context: context,
         file: file,
-        recieverUserId: recieverUserId,
+        receiverUserId: recieverUserId,
         senderUserData: value!,
         messageEnum: messageEnum,
         ref: ref,
