@@ -3,7 +3,9 @@ enum MessageEnum {
   image('image'),
   audio('audio'),
   video('video'),
-  gif('gif');
+  gif('gif'),
+  voice('voice'),
+  emoji('emoji');
 
   const MessageEnum(this.type);
   final String type;
@@ -25,6 +27,10 @@ extension ConvertMessage on String {
         return MessageEnum.gif;
       case 'video':
         return MessageEnum.video;
+      case 'voice':
+        return MessageEnum.voice;
+      case 'emoji':
+        return MessageEnum.emoji;
       default:
         return MessageEnum.text;
     }

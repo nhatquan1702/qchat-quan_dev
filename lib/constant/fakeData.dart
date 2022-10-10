@@ -1,6 +1,7 @@
 import 'package:chat_app/data/model/response/chat_message.dart';
 import 'package:chat_app/data/model/response/chat_user.dart';
 import 'package:chat_app/data/model/response/send_menu_item.dart';
+import 'package:chat_app/view/component/enum/message_enum.dart';
 import 'package:flutter/material.dart';
 
 class FakeData{
@@ -37,10 +38,10 @@ class FakeData{
   ];
 
   static List<SendMenuItems> menuItems = [
-    SendMenuItems(text: "Emoji", icons: Icons.emoji_emotions_outlined, color: Colors.purple),
-    SendMenuItems(text: "GIF", icons: Icons.gif_box_outlined, color: Colors.green),
-    SendMenuItems(text: "Photo", icons: Icons.image, color: Colors.amber),
-    SendMenuItems(text: "Video", icons: Icons.video_collection, color: Colors.blue),
-    SendMenuItems(text: "Voice", icons: Icons.mic, color: Colors.orange),
+    SendMenuItems(text: "Emoji", icons: Icons.emoji_emotions_outlined, color: Colors.purple, type: MessageEnum.emoji),
+    SendMenuItems(text: "GIF", icons: Icons.gif_box_outlined, color: Colors.green, type: MessageEnum.gif),
+    SendMenuItems(text: "Photo", icons: Icons.image, color: Colors.amber, type: MessageEnum.image),
+    SendMenuItems(text: "Video", icons: Icons.video_collection, color: Colors.blue, type: MessageEnum.video),
+    SendMenuItems(text: "Audio", icons: Icons.audiotrack_outlined, color: Colors.orange, type: MessageEnum.audio),
   ];
 }

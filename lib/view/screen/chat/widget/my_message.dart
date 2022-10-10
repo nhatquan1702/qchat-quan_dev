@@ -1,5 +1,6 @@
 import 'package:chat_app/view/component/enum/message_enum.dart';
 import 'package:chat_app/view/component/provider/obscure_notifier.dart';
+import 'package:chat_app/view/screen/chat/widget/display_media_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swipe_to/swipe_to.dart';
@@ -69,12 +70,9 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                       Text(widget.message),
                       Padding(
                         padding: const EdgeInsets.only(top: 2),
-                        child: Text(
-                          widget.date,
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: appColor.canvasColor.withOpacity(0.5),
-                          ),
+                        child: DisplayMediaMessage(
+                          message: widget.message,
+                          type: widget.type,
                         ),
                       ),
                     ],

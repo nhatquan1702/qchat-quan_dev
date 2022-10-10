@@ -4,6 +4,7 @@ import 'package:chat_app/constant/fakeData.dart';
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/view/component/enum/message_enum.dart';
 import 'package:chat_app/view/component/provider/obscure_notifier.dart';
+import 'package:chat_app/view/component/widget/picker_media.dart';
 import 'package:chat_app/view/screen/chat/chat_appbar.dart';
 import 'package:chat_app/view/screen/chat/chat_view_model.dart';
 import 'package:chat_app/view/screen/chat/widget/chat_list.dart';
@@ -173,7 +174,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
-                        showModal();
+                        showModal(context);
                         _scrollToEnd();
                       },
                       child: Container(
@@ -259,13 +260,14 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
     );
   }
 
-  void showModal() {
+  void showModal(BuildContext context) {
+    final appColor = Theme.of(context);
     showModalBottomSheet(
       context: context,
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
+            color: appColor.cardColor,
           ),
           child: Column(
             children: <Widget>[
@@ -276,7 +278,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                 child: Container(
                   height: 4,
                   width: 50,
-                  color: Theme.of(context).cardColor.withOpacity(0.2),
+                  color: appColor.cardColor.withOpacity(0.2),
                 ),
               ),
               const SizedBox(
@@ -290,7 +292,25 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                   return Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        switch (FakeData.menuItems[index].type) {
+                          case MessageEnum.emoji:
+                            break;
+                          case MessageEnum.audio:
+                            break;
+                          case MessageEnum.video:
+                            selectVideo();
+                            break;
+                          case MessageEnum.image:
+                            selectImage();
+                            break;
+                          case MessageEnum.gif:
+                            selectGIF();
+                            break;
+                          default:
+                            break;
+                        }
+                      },
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -314,5 +334,32 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
         );
       },
     );
+  }
+
+  void selectImage() async {
+    File? image = await pickImageFromGallery(context);
+    if (image != null) {
+      sendFileMessage(image, MessageEnum.image);
+    }
+  }
+
+  void selectVideo() async {
+    File? video = await pickVideoFromGallery(context);
+    if (video != null) {
+      sendFileMessage(video, MessageEnum.video);
+    }
+  }
+
+  void selectGIF() async {
+    final gif = await pickGIF(context);
+    if (gif != null) {
+      // ignore: use_build_context_synchronously
+      ref.read(chatViewModelProvider).sendGIFMessage(
+        context,
+        gif.url,
+        widget.uid,
+        widget.isGroupChat,
+      );
+    }
   }
 }

@@ -302,19 +302,22 @@ class ChatRepository {
 
       switch (messageEnum) {
         case MessageEnum.image:
-          contactMsg = '📷 Photo';
+          contactMsg = 'Photo';
           break;
         case MessageEnum.video:
-          contactMsg = '📸 Video';
+          contactMsg = 'Video';
           break;
         case MessageEnum.audio:
-          contactMsg = '🎵 Audio';
+          contactMsg = 'Audio';
           break;
         case MessageEnum.gif:
-          contactMsg = 'GIF';
+          contactMsg = 'Gif';
+          break;
+        case MessageEnum.emoji:
+          contactMsg = 'Emoji';
           break;
         default:
-          contactMsg = 'GIF';
+          contactMsg = 'Text';
       }
       _saveDataToContactsSubCollection(
         senderUserData,
