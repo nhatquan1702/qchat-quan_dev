@@ -67,12 +67,18 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.message),
+                      DisplayMediaMessage(
+                        message: widget.message,
+                        type: widget.type,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 2),
-                        child: DisplayMediaMessage(
-                          message: widget.message,
-                          type: widget.type,
+                        child: Text(
+                          widget.date,
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: appColor.canvasColor.withOpacity(0.5),
+                          ),
                         ),
                       ),
                     ],

@@ -1,4 +1,5 @@
 import 'package:chat_app/view/component/enum/message_enum.dart';
+import 'package:chat_app/view/screen/chat/widget/display_media_message.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_to/swipe_to.dart';
 
@@ -45,7 +46,10 @@ class SendMessageCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(message),
+                    DisplayMediaMessage(
+                      message: message,
+                      type: type,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
