@@ -22,7 +22,7 @@ class DisplayMediaMessage extends StatelessWidget {
         ? Text(
             message,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 14,
             ),
           )
         : type == MessageEnum.audio
@@ -55,10 +55,10 @@ class DisplayMediaMessage extends StatelessWidget {
                   )
                 : type == MessageEnum.gif
                     ? CachedNetworkImage(
-                        imageUrl: message,
+                        imageUrl: message, fit: BoxFit.cover,
                       )
                     : CachedNetworkImage(
-                        imageUrl: message,
+                        imageUrl: message, fit: BoxFit.cover,
                       );
   }
 }

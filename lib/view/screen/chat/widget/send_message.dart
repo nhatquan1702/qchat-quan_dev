@@ -34,7 +34,7 @@ class SendMessageCard extends StatelessWidget {
         children: [
           Container(
             padding:
-                const EdgeInsets.only(left: 24, right: 48, top: 5, bottom: 5),
+                const EdgeInsets.only(left: 30, right: 48, top: 5, bottom: 5),
             child: Align(
               alignment: (Alignment.topLeft),
               child: Container(
@@ -71,16 +71,16 @@ class SendMessageCard extends StatelessWidget {
             child: avatarUrl == null
                 ? CircleAvatar(
                     backgroundColor: appColor.canvasColor.withOpacity(0.5),
-                    maxRadius: 10,
+                    maxRadius: 12,
                     child: Icon(
                       Icons.person,
                       color: appColor.canvasColor,
-                      size: 10,
+                      size: 12,
                     ),
                   )
                 : CircleAvatar(
                     backgroundImage: NetworkImage(avatarUrl!),
-                    maxRadius: 10,
+                    maxRadius: 12,
                   ),
           ),
         ],
