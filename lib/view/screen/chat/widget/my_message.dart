@@ -47,47 +47,44 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
       onLeftSwipe: widget.onLeftSwipe,
       child: Stack(
         children: [
-          InkWell(
-            onTap: () => updateStatus(),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 48,
-                right: 24,
-                top: 5,
-                bottom: 5,
-              ),
-              child: Align(
-                alignment: (Alignment.topRight),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: (appColor.primaryColor).withOpacity(0.5),
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DisplayMediaMessage(
-                        message: widget.message,
-                        type: widget.type,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Text(
-                          widget.date,
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: appColor.canvasColor.withOpacity(0.5),
-                          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 48,
+              right: 24,
+              top: 5,
+              bottom: 5,
+            ),
+            child: Align(
+              alignment: (Alignment.topRight),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: (appColor.primaryColor).withOpacity(0.5),
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DisplayMediaMessage(
+                      message: widget.message,
+                      type: widget.type,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        widget.date,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: appColor.canvasColor.withOpacity(0.5),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-          isTapMess
+          widget.isSeen
               ? Positioned(
                   bottom: 0,
                   right: 4,
@@ -107,7 +104,15 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                           maxRadius: 9,
                         ),
                 )
-              : const SizedBox(),
+              : Positioned(
+                  bottom: 0,
+                  right: 4,
+                  child: Icon(
+                    Icons.check_circle,
+                    size: 20,
+                    color: appColor.primaryColor,
+                  ),
+                )
         ],
       ),
     );
