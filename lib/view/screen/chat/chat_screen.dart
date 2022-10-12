@@ -294,8 +294,6 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     child: ListTile(
                       onTap: () {
                         switch (FakeData.menuItems[index].type) {
-                          case MessageEnum.emoji:
-                            break;
                           case MessageEnum.audio:
                             break;
                           case MessageEnum.video:

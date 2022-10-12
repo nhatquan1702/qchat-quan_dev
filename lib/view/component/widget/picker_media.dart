@@ -67,8 +67,15 @@ Future<GiphyGif?> pickGIF(BuildContext context) async {
   GiphyGif? gif;
   try {
     gif = await Giphy.getGif(
+      lang: GiphyLanguage.vietnamese,
       context: context,
       apiKey: 'pwXu0t7iuNVm8VO5bgND2NzwCpVH9S0F',
+      keepState: true,
+      showPreview: true,
+      headerGifsText: 'Gif',
+      headerStickersText: 'Sticker',
+      headerEmojiText: 'Emoji',
+      showSearch: false
     );
   } catch (e) {
     showSnackBarFailure(

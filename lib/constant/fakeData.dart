@@ -38,8 +38,8 @@ class FakeData{
   ];
 
   static List<SendMenuItems> menuItems = [
-    SendMenuItems(text: "Emoji", icons: Icons.emoji_emotions_outlined, color: Colors.purple, type: MessageEnum.emoji),
-    SendMenuItems(text: "GIF", icons: Icons.gif_box_outlined, color: Colors.green, type: MessageEnum.gif),
+    SendMenuItems(text: "Gif, Sticker, Emoji", icons: Icons.emoji_emotions_outlined, color: Colors.purple, type: MessageEnum.gif),
+    SendMenuItems(text: "Voice", icons: Icons.mic, color: Colors.green, type: MessageEnum.voice),
     SendMenuItems(text: "Photo", icons: Icons.image, color: Colors.amber, type: MessageEnum.image),
     SendMenuItems(text: "Video", icons: Icons.video_collection, color: Colors.blue, type: MessageEnum.video),
     SendMenuItems(text: "Audio", icons: Icons.audiotrack_outlined, color: Colors.orange, type: MessageEnum.audio),

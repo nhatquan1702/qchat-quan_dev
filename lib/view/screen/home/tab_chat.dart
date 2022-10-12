@@ -1,5 +1,6 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/data/model/response/chat_contact.dart';
+import 'package:chat_app/view/component/setup/show_time_format.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
 import 'package:chat_app/view/screen/chat/chat_user_list_item.dart';
 import 'package:chat_app/view/screen/chat/chat_view_model.dart';
@@ -82,8 +83,8 @@ class _TabChatsState extends ConsumerState<TabChats> {
                       lastMessage: chatContactItem.lastMessage,
                       avatarImageUrl: chatContactItem.avatarImageUrl,
                       timeSentMessage:
-                          DateFormat.Hm().format(chatContactItem.timeSent),
-                      isMessageRead: (index == 0 || index == 3) ? true : false,
+                      FormatTime.showTimeFormat(chatContactItem.timeSent),
+                      isMessageRead: false,
                     );
                   },
                 );

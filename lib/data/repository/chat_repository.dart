@@ -313,9 +313,6 @@ class ChatRepository {
         case MessageEnum.gif:
           contactMsg = 'Gif';
           break;
-        case MessageEnum.emoji:
-          contactMsg = 'Emoji';
-          break;
         default:
           contactMsg = 'Text';
       }
