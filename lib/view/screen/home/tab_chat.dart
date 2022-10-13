@@ -1,12 +1,12 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/data/model/response/chat_contact.dart';
+import 'package:chat_app/view/component/enum/time_enum.dart';
 import 'package:chat_app/view/component/setup/show_time_format.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
 import 'package:chat_app/view/screen/chat/chat_user_list_item.dart';
 import 'package:chat_app/view/screen/chat/chat_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class TabChats extends ConsumerStatefulWidget {
   const TabChats({Key? key}) : super(key: key);
@@ -82,8 +82,10 @@ class _TabChatsState extends ConsumerState<TabChats> {
                       nameDisplay: chatContactItem.name,
                       lastMessage: chatContactItem.lastMessage,
                       avatarImageUrl: chatContactItem.avatarImageUrl,
-                      timeSentMessage:
-                      FormatTime.showTimeFormat(chatContactItem.timeSent),
+                      timeSentMessage: FormatTime.showTimeFormat(
+                        chatContactItem.timeSent,
+                        TimeEnum.listUser,
+                      ),
                       isMessageRead: false,
                     );
                   },

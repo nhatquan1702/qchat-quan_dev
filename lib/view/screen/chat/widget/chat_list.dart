@@ -1,13 +1,14 @@
 import 'package:chat_app/data/model/response/message.dart';
 import 'package:chat_app/data/repository/message_reply_repository.dart';
 import 'package:chat_app/view/component/enum/message_enum.dart';
+import 'package:chat_app/view/component/enum/time_enum.dart';
+import 'package:chat_app/view/component/setup/show_time_format.dart';
 import 'package:chat_app/view/screen/chat/chat_view_model.dart';
 import 'package:chat_app/view/screen/chat/widget/my_message.dart';
 import 'package:chat_app/view/screen/chat/widget/send_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String receiverUserId;
@@ -57,10 +58,9 @@ class _ChatListState extends ConsumerState<ChatList> {
               .groupChatStream(widget.receiverUserId)
           : ref.read(chatViewModelProvider).chatStream(widget.receiverUserId),
       builder: (context, snapshot) {
-        if(snapshot.data == null){
+        if (snapshot.data == null) {
           return const SizedBox();
-        }
-        else{
+        } else {
           return ListView.builder(
             controller: messageController,
             itemCount: snapshot.data!.length,
@@ -68,16 +68,19 @@ class _ChatListState extends ConsumerState<ChatList> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final messageData = snapshot.data![index];
-              var timeSent = DateFormat.Hm().format(messageData.timeSent);
+              var timeSent = FormatTime.showTimeFormat(
+                messageData.timeSent,
+                TimeEnum.listUser,
+              );
 
               if (!messageData.isSeen &&
                   messageData.recieverid ==
                       FirebaseAuth.instance.currentUser!.uid) {
                 ref.read(chatViewModelProvider).setChatMessageSeen(
-                  context,
-                  widget.receiverUserId,
-                  messageData.messageId,
-                );
+                      context,
+                      widget.receiverUserId,
+                      messageData.messageId,
+                    );
               }
 
               if (messageData.senderId ==

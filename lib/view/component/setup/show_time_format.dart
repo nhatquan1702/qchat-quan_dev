@@ -1,5 +1,11 @@
+import 'package:chat_app/view/component/enum/time_enum.dart';
+
 class FormatTime {
-  static String showTimeFormat(DateTime time) {
+  static String showTimeFormat(DateTime time, TimeEnum type) {
+    String convertNumber(int value) {
+      return value < 10 ? "0$value" : "$value";
+    }
+
     int timeBetween(DateTime from, DateTime to) {
       from = DateTime(
         from.year,
@@ -30,19 +36,42 @@ class FormatTime {
     int diffHours = diff ~/ (60 * 60 * 1000);
     int diffDays = diff ~/ (60 * 60 * 1000 * 24);
 
-    String showTime = '';
-    if (diffSeconds < 60) {
-      showTime = '$diffSeconds giây trước';
-    } else if (diffMinutes > 60 && diffMinutes < 60) {
-      showTime = '$diffMinutes phút trước';
-    } else if (diffMinutes > 60 && diffHours < 24) {
-      showTime = '$diffHours giờ trước';
-    } else if (diffHours > 24 && diffDays < 30) {
-      showTime = '$diffDays ngày trước';
-    } else if (diffDays > 30) {
-      showTime =
-          '${time.hour}:${time.minute} ${time.day}/${time.month}/${time.year}';
+    switch (type) {
+      case TimeEnum.listUser:
+        String showTimeListUser = '';
+        if (diffSeconds < 60) {
+          showTimeListUser = '$diffSeconds giây trước';
+        } else if (diffSeconds > 59 && diffMinutes < 60) {
+          showTimeListUser = '$diffMinutes phút trước';
+        } else if (diffMinutes > 59 && diffHours < 25) {
+          showTimeListUser = '$diffHours giờ trước';
+        } else if (diffHours > 24 && diffDays < 31) {
+          showTimeListUser = '$diffDays ngày trước';
+        } else if (diffDays > 30) {
+          showTimeListUser =
+              '${convertNumber(time.hour)}:${convertNumber(time.minute)} ${convertNumber(time.day)}/${convertNumber(time.month)}/${convertNumber(time.year)}';
+        }
+        return showTimeListUser;
+      case TimeEnum.listChat:
+        String showTimeListUser = '';
+        if (diffSeconds < 60) {
+          showTimeListUser = '$diffSeconds giây trước';
+        } else if (diffSeconds > 59 && diffMinutes < 60) {
+          showTimeListUser = '$diffMinutes phút trước';
+        } else if (diffMinutes > 59 && diffHours < 25) {
+          showTimeListUser = '$diffHours giờ trước';
+        } else if (diffHours > 24 && diffDays < 8) {
+          showTimeListUser = '$diffDays ngày trước';
+        } else if (diffDays > 7) {
+          showTimeListUser =
+              '${convertNumber(time.hour)}:${convertNumber(time.minute)} ${convertNumber(time.day)}/${convertNumber(time.month)}/${convertNumber(time.year)}';
+        }
+        return showTimeListUser;
+      case TimeEnum.detailChat:
+        String showTimeListUser = '';
+        showTimeListUser =
+            '${convertNumber(time.hour)}:${convertNumber(time.minute)} ${convertNumber(time.day)}/${convertNumber(time.month)}/${convertNumber(time.year)}';
+        return showTimeListUser;
     }
-    return showTime;
   }
 }
