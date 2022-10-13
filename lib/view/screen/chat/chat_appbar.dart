@@ -1,6 +1,7 @@
 import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/data/model/response/user_model.dart';
 import 'package:chat_app/view/component/widget/button_in_appbar.dart';
+import 'package:chat_app/view/screen/call/call_view_model.dart';
 import 'package:chat_app/view/screen/login/login_vew_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,11 +9,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ChatDetailPageAppBar extends ConsumerWidget
     implements PreferredSizeWidget {
   final String uid;
+  final bool isGroupChat;
+  final String avatarUrl;
+  final String name;
 
-  const ChatDetailPageAppBar({
-    super.key,
-    required this.uid,
-  });
+  const ChatDetailPageAppBar(
+      this.uid, this.isGroupChat, this.avatarUrl, this.name,
+      {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -112,13 +115,25 @@ class ChatDetailPageAppBar extends ConsumerWidget
         CustomButtonInAppbar(
           context: context,
           icon: Icons.video_call,
-          function: () {},
+          function: () {
+            makeCall(ref, context);
+          },
         ),
         const SizedBox(
           width: 16,
         ),
       ],
     );
+  }
+
+  void makeCall(WidgetRef ref, BuildContext context) {
+    ref.read(callViewModelProvider).makeCall(
+          context,
+          name,
+          uid,
+          avatarUrl,
+          isGroupChat,
+        );
   }
 
   @override

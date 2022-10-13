@@ -141,7 +141,10 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
 
     return Scaffold(
       appBar: ChatDetailPageAppBar(
-        uid: widget.uid,
+        widget.uid,
+        widget.isGroupChat,
+        widget.avatarUrl,
+        widget.name,
       ),
       body: Container(
         color: appColor.cardColor.withOpacity(0.8),
