@@ -28,15 +28,12 @@ lib
 ## III. Screenshoot
 #### 3.1. Loading
 ###### 3.1.1. Loading Light Screen
-```
 ![Screenshot_2023-02-04-14-36-17-89_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758441-18258b7b-f7d0-4b87-81c7-111e46456627.jpg)
-```
 
 ###### 3.1.2. Loading Dark Screen
 ![Screenshot_2023-02-04-14-36-41-22_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758448-7db39360-5d3b-4ff1-b509-d880637387a7.jpg)
 
 #### 3.2. Login and Register
-
 ###### 3.2.1. Login Screen
 ![Screenshot_2023-02-04-15-04-50-03_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759632-5bbb24d5-7e58-4f3f-9237-7007164d182b.jpg)
 ![Screenshot_2023-02-04-15-05-20-59_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759638-70def8b5-2ffd-4ed7-b3b6-aaa790d5f525.jpg)
@@ -49,7 +46,6 @@ lib
 
 ###### 3.2.3. Update infomation Screen
 ![Screenshot_2023-02-04-15-03-00-79_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759754-ae006f85-6002-4201-a115-0f72988638d4.jpg)
-
 
 #### 3.3. Home
 ###### 3.3.1. Messgage Screen
@@ -69,7 +65,6 @@ lib
 ![Screenshot_2023-02-04-14-37-39-75_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759958-8983f664-174b-43ee-9fe6-42b0b4fc99e5.jpg)
 
 ###### 3.4.2. Media Chat Screen
-
 |  |  |  |
 | :---:  | :---:  | :---:  |
 | ![Screenshot_2023-02-04-14-37-50-25_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759997-871305d9-76fc-4b1c-a386-6c7db305a31d.jpg) | ![Screenshot_2023-02-04-14-38-01-39_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760002-00a1904a-fbb7-44e7-9dcd-c34e839a7ceb.jpg) | ![Screenshot_2023-02-04-14-38-12-30_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760003-c296476a-ef2c-4b1e-b89e-dbf519181a41.jpg) 
