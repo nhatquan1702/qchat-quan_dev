@@ -28,7 +28,7 @@ lib
 ## III. Screenshoot
 #### 3.1. Loading
 ###### 3.1.1. Loading Light Screen
-![Screenshot_2023-02-04-14-36-17-89_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758441-18258b7b-f7d0-4b87-81c7-111e46456627.jpg)
+![Screenshot_2023-02-04-14-36-17-89_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758441-18258b7b-f7d0-4b87-81c7-111e46456627.jpg){:height="50%" width="50%"}
 
 ###### 3.1.2. Loading Dark Screen
 ![Screenshot_2023-02-04-14-36-41-22_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758448-7db39360-5d3b-4ff1-b509-d880637387a7.jpg)
