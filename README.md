@@ -84,9 +84,11 @@ lib
 ![Screenshot_2023-02-04-14-41-03-51_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760141-d2e462a0-1706-4bea-b4d2-86680acac8f7.jpg)
 
 ###### 3.5.2. Edit profile Screen
-![Screenshot_2023-02-04-14-41-09-02_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760146-93c86027-319e-47d1-bc00-ce1374faafed.jpg)
-![Screenshot_2023-02-04-14-41-13-11_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760148-0d85d493-22ed-411a-9dd5-0f5f6fde6c6a.jpg)
-![Screenshot_2023-02-04-16-40-41-87_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760397-a01e7b79-9959-4591-91fb-dc6ce59ffd5b.jpg)
+|  |  |  |
+| :---:  | :---:  | :---:  |
+|![Screenshot_2023-02-04-14-41-09-02_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760146-93c86027-319e-47d1-bc00-ce1374faafed.jpg)|
+![Screenshot_2023-02-04-14-41-13-11_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760148-0d85d493-22ed-411a-9dd5-0f5f6fde6c6a.jpg)|
+![Screenshot_2023-02-04-16-40-41-87_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760397-a01e7b79-9959-4591-91fb-dc6ce59ffd5b.jpg)|
 
 
 ## IV. Plugins
