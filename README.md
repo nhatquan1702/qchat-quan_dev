@@ -67,10 +67,11 @@ lib
 ![Screenshot_2023-02-04-14-37-39-75_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759958-8983f664-174b-43ee-9fe6-42b0b4fc99e5.jpg)
 
 ###### 3.4.2. Media Chat Screen
-![Screenshot_2023-02-04-14-37-50-25_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759997-871305d9-76fc-4b1c-a386-6c7db305a31d.jpg)
-![Screenshot_2023-02-04-14-38-01-39_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760002-00a1904a-fbb7-44e7-9dcd-c34e839a7ceb.jpg)
-![Screenshot_2023-02-04-14-38-12-30_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760003-c296476a-ef2c-4b1e-b89e-dbf519181a41.jpg)
-![Screenshot_2023-02-04-14-38-42-18_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760004-c13020ab-2141-47f9-a930-890d85fff9c4.jpg)
+
+|  |  |  |
+| :---:  | :---:  | :---:  |
+| ![Screenshot_2023-02-04-14-37-50-25_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216759997-871305d9-76fc-4b1c-a386-6c7db305a31d.jpg) | ![Screenshot_2023-02-04-14-38-01-39_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760002-00a1904a-fbb7-44e7-9dcd-c34e839a7ceb.jpg) | ![Screenshot_2023-02-04-14-38-12-30_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760003-c296476a-ef2c-4b1e-b89e-dbf519181a41.jpg) 
+| ![Screenshot_2023-02-04-14-38-42-18_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760004-c13020ab-2141-47f9-a930-890d85fff9c4.jpg) |  | 
 
 ###### 3.4.3. Voice call Screen
 ![Screenshot_2023-02-04-14-38-50-89_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216760029-6c76735b-abf2-483a-858f-bb4ebeea5937.jpg)
