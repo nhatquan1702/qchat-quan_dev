@@ -26,27 +26,24 @@ lib
 ```
 
 ## III. Screenshoot
-#### 3.1. Home screen
-In Home screen, it just simply load then show data to UI.
-![Screenshot_2023-02-04-14-00-09-35_d0db8b9ee9dd47dcd039fcb1c48fd699](https://user-images.githubusercontent.com/64344509/216754059-3a4fdb15-a35d-4817-9d89-072e1a89a113.jpg)
+###### 3.1. Loading Light Screen
+![Screenshot_2023-02-04-14-36-17-89_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758441-18258b7b-f7d0-4b87-81c7-111e46456627.jpg)
 
-###### 3.1.1. Explore light screen
-![Screenshot_2023-02-04-14-03-24-96_d0db8b9ee9dd47dcd039fcb1c48fd699](https://user-images.githubusercontent.com/64344509/216754077-047d5617-9806-4650-8de8-d3c1fe650fef.jpg)
+###### 3.2. Loading Dark Screen
+![Screenshot_2023-02-04-14-36-41-22_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758448-7db39360-5d3b-4ff1-b509-d880637387a7.jpg)
 
-###### 3.1.2. Explore dark screen
-![Screenshot_2023-02-04-14-00-27-78_d0db8b9ee9dd47dcd039fcb1c48fd699](https://user-images.githubusercontent.com/64344509/216754082-3781d992-db4c-4f44-b35a-696538cfdd0f.jpg)
+###### 3.3. Login Screen
+![Screenshot_2023-02-04-15-02-01-80_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758488-cbe5d310-36e2-418e-8df7-32a72fb101f0.jpg)
+![Screenshot_2023-02-04-15-04-50-03_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758510-27f1f03d-18ef-422f-b05f-146a78591a25.jpg)
+![Screenshot_2023-02-04-15-05-20-59_8c918bf06c4e14a3c6d2957a72894835](https://user-images.githubusercontent.com/64344509/216758516-49c065f3-4432-4054-8e1f-f934bd135232.jpg)
 
-###### 3.1.2. Topic Screen
-![Screenshot_2023-02-04-14-00-39-98_d0db8b9ee9dd47dcd039fcb1c48fd699](https://user-images.githubusercontent.com/64344509/216754178-7d134942-1f2b-4e12-8383-6a130c13b0df.jpg)
+###### 3.4. Search Screen
 
-###### 3.1.2. Search Screen
-![Screenshot_2023-02-04-14-01-01-27_d0db8b9ee9dd47dcd039fcb1c48fd699](https://user-images.githubusercontent.com/64344509/216754196-f1ab10da-3f47-4c47-a78e-f691a83b0a88.jpg)
 
-###### 3.1.2. Detail Photo Screen
-![Screenshot_2023-02-04-14-01-21-68_d0db8b9ee9dd47dcd039fcb1c48fd699](https://user-images.githubusercontent.com/64344509/216754225-9bde0f8d-94d7-40ef-8364-ac2a3fc463cf.jpg)
+###### 3.5. Detail Photo Screen
 
-###### 3.1.2. Edit Photo Screen
-![Screenshot_2023-02-04-14-01-41-23_d0db8b9ee9dd47dcd039fcb1c48fd699](https://user-images.githubusercontent.com/64344509/216754238-5effed97-0fc1-4d91-b211-ee34fa4f0b0c.jpg)
+
+###### 3.6. Edit Photo Screen
 
 
 ## VI. Photo API
